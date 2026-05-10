@@ -16,7 +16,7 @@
         .service-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .service-panel.active { transform: translateX(0); }
         
-        /* Unified Faded Logo Background for all Service Panels */
+        /* Unified Faded Logo Background */
         .panel-bg-logo {
             background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('logo.png');
             background-repeat: no-repeat;
@@ -26,7 +26,21 @@
             background-color: white;
         }
 
-        /* Mobile adjustment for background size */
+        /* Micro-Interactions: Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover lift for cards */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-10px); }
+
         @media (max-width: 768px) {
             .panel-bg-logo { background-size: 70%; }
         }
@@ -36,20 +50,26 @@
 
     <nav class="glass sticky top-0 z-40 border-b border-slate-100">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="w-1/3 flex justify-start">
+            <div class="w-1/3 flex justify-start gap-6 items-center">
                 <a href="#services" class="font-bold text-[10px] uppercase tracking-[0.3em] text-slate-400 hover:text-blue-600 transition">Services</a>
             </div>
+            
             <div class="w-1/3 flex justify-center h-full py-2">
                 <a href="#" onclick="window.scrollTo(0,0); return false;" class="h-full">
-                    <img src="logo.png" alt="ImoTech Logo" class="h-16 w-auto">
+                    <img src="logo.png" alt="ImoTech Logo" class="h-14 w-auto">
                 </a>
             </div>
-            <div class="w-1/3"></div>
+            
+            <div class="w-1/3 flex justify-end">
+                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition shadow-md text-sm">
+                    Consultation
+                </button>
+            </div>
         </div>
     </nav>
 
     <header id="home" class="hero-gradient py-32 px-6 text-center border-b border-slate-100">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto reveal">
             <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight text-slate-900">
                 ImoTech Solutions. <br><span class="text-blue-600">Intelligent Systems.</span>
             </h1>
@@ -58,34 +78,32 @@
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
                 <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition text-lg shadow-lg">
-                    Services
+                    View Services
                 </a>
-                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-xl text-lg">
-                    Request a Consultation
-                </button>
             </div>
         </div>
     </header>
 
     <section id="services" class="py-24 max-w-6xl mx-auto px-6 bg-white">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 reveal">
             <h2 class="text-3xl font-extrabold mb-4 text-slate-900">Our Core Capabilities</h2>
             <p class="text-slate-500 max-w-xl mx-auto">Explore how our customized systems transform business operations.</p>
         </div>
+        
         <div class="grid lg:grid-cols-3 gap-8">
-            <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-xl transition duration-300">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300">
                 <div class="text-5xl mb-6">📊</div>
                 <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Management</h3>
                 <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Business Management Systems for full operational oversight.</p>
                 <button onclick="openPanel('panel-1')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
             </div>
-            <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-xl transition duration-300">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.1s;">
                 <div class="text-5xl mb-6">🤖</div>
                 <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Automation</h3>
                 <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">AI & Automation Solutions to replace repetitive tasks.</p>
                 <button onclick="openPanel('panel-2')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
             </div>
-            <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-xl transition duration-300">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.2s;">
                 <div class="text-5xl mb-6">🌐</div>
                 <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Platforms</h3>
                 <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Web Platforms & Digital Tools that work for your business.</p>
@@ -118,14 +136,13 @@
             <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Business Management Systems</h2>
             <div class="space-y-6 text-lg text-slate-600">
-                <p>Custom-built systems designed to manage your operations:</p>
+                <p>Custom-built systems designed to manage your operations.</p>
                 <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
                     <li>Internal dashboards</li>
                     <li>Workflow and task management</li>
                     <li>Staff and process coordination</li>
                     <li>Reporting and performance tracking</li>
                 </ul>
-                <p class="font-bold text-slate-900 mt-10">Structure your business into a clear, controlled system.</p>
             </div>
         </div>
     </div>
@@ -135,14 +152,12 @@
             <button onclick="closePanel('panel-2')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">AI & Automation Solutions</h2>
             <div class="space-y-6 text-lg text-slate-600">
-                <p>We use AI to reduce manual workload and improve decision-making:</p>
+                <p>Intelligent workflows designed to scale your business.</p>
                 <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
                     <li>Process automation</li>
                     <li>Smart data handling</li>
                     <li>AI-assisted workflows</li>
-                    <li>Automated reporting and insights</li>
                 </ul>
-                <p class="font-bold text-slate-900 mt-10">Replace repetitive tasks with intelligent automation.</p>
             </div>
         </div>
     </div>
@@ -152,21 +167,32 @@
             <button onclick="closePanel('panel-3')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Web Platforms & Digital Tools</h2>
             <div class="space-y-6 text-lg text-slate-600">
-                <p>We build functional platforms that support real business activity:</p>
+                <p>Functional ecosystems built for performance.</p>
                 <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
-                    <li>Company websites</li>
                     <li>Client and staff portals</li>
-                    <li>Service platforms and dashboards</li>
-                    <li>Integrated digital ecosystems</li>
+                    <li>Service platforms</li>
+                    <li>Integrated digital tools</li>
                 </ul>
-                <p class="font-bold text-slate-900 mt-10">More than a website—a working business tool.</p>
             </div>
         </div>
     </div>
 
     <script>
-        window.onbeforeunload = function () { window.scrollTo(0, 0); }
-        if (history.scrollRestoration) { history.scrollRestoration = 'manual'; }
+        // Smooth reveal logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Initial check on load
+        reveal();
 
         function openPanel(id) {
             document.getElementById(id).classList.add('active');
