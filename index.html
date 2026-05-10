@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImoTech Solutions | AI & Software Engineering</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -31,6 +34,12 @@
         .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .hover-lift:hover { transform: translateY(-10px); }
 
+        /* Tool Specific Styles */
+        .tool-input { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .invoice-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+        .invoice-table th { background: #f8fafc; border-bottom: 2px solid #000; padding: 10px; text-align: left; }
+        .invoice-table td { padding: 10px; border-bottom: 1px solid #eee; }
+
         @media (max-width: 768px) { .panel-bg-logo { background-size: 70%; } }
     </style>
 </head>
@@ -43,9 +52,13 @@
                     <img src="logo.png" alt="ImoTech Logo" class="h-14 md:h-16 w-auto">
                 </a>
             </div>
+            <div class="hidden md:flex gap-8 font-semibold text-sm uppercase tracking-widest">
+                <a href="#services" class="hover:text-blue-600 transition">Services</a>
+                <a href="#tools" class="hover:text-blue-600 transition">Free Tools</a>
+            </div>
             <div class="flex items-center">
                 <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg text-sm md:text-base">
-                    Request Consultation
+                    Consultation
                 </button>
             </div>
         </div>
@@ -57,7 +70,7 @@
                 ImoTech Solutions. <br><span class="text-blue-600">Intelligent Systems.</span>
             </h1>
             <p class="text-xl text-slate-500 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
-                We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
+                We design and deploy AI-driven software that improves efficiency and automates processes.
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition text-lg shadow-lg">
@@ -69,126 +82,147 @@
 
     <section id="services" class="py-24 max-w-6xl mx-auto px-6 bg-white">
         <div class="text-center mb-16 reveal">
-            <h2 class="text-3xl font-extrabold mb-4 text-slate-900">Our Core Capabilities</h2>
-            <p class="text-slate-500 max-w-xl mx-auto">Explore how our customized systems transform business operations.</p>
+            <h2 class="text-3xl font-extrabold mb-4 text-slate-900">Core Capabilities</h2>
+            <p class="text-slate-500">Customized systems to transform business operations.</p>
         </div>
         
         <div class="grid lg:grid-cols-3 gap-8">
-            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col">
                 <div class="text-5xl mb-6">📊</div>
-                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Management</h3>
-                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Business Management Systems for full operational oversight.</p>
-                <button onclick="openPanel('panel-1')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+                <h3 class="text-2xl font-extrabold mb-4">Management</h3>
+                <p class="text-slate-600 mb-8 flex-grow">Business Management Systems for full operational oversight.</p>
+                <button onclick="openPanel('panel-1')" class="w-full py-4 bg-white border border-slate-200 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Learn More</button>
             </div>
-            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.1s;">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col" style="transition-delay: 0.1s;">
                 <div class="text-5xl mb-6">🤖</div>
-                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Automation</h3>
-                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">AI & Automation Solutions to replace repetitive tasks.</p>
-                <button onclick="openPanel('panel-2')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+                <h3 class="text-2xl font-extrabold mb-4">Automation</h3>
+                <p class="text-slate-600 mb-8 flex-grow">AI & Automation Solutions to replace repetitive tasks.</p>
+                <button onclick="openPanel('panel-2')" class="w-full py-4 bg-white border border-slate-200 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Learn More</button>
             </div>
-            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.2s;">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col" style="transition-delay: 0.2s;">
                 <div class="text-5xl mb-6">🌐</div>
-                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Platforms</h3>
-                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Web Platforms & Digital Tools that work for your business.</p>
-                <button onclick="openPanel('panel-3')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+                <h3 class="text-2xl font-extrabold mb-4">Platforms</h3>
+                <p class="text-slate-600 mb-8 flex-grow">Web Platforms & Digital Tools that work for your business.</p>
+                <button onclick="openPanel('panel-3')" class="w-full py-4 bg-white border border-slate-200 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Learn More</button>
             </div>
         </div>
     </section>
 
-    <section class="py-24 bg-slate-900 text-white">
+    <section id="tools" class="py-24 bg-slate-50">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-4xl font-extrabold mb-4">How We Work</h2>
-                <p class="text-slate-400">Our 4-step roadmap to engineering your competitive advantage.</p>
+            <div class="text-center mb-16 reveal">
+                <span class="text-blue-600 font-bold tracking-widest text-xs uppercase">Open Access</span>
+                <h2 class="text-3xl font-extrabold mb-4 text-slate-900">Free Business Tools</h2>
+                <p class="text-slate-500">Quick-start utilities for modern entrepreneurs.</p>
             </div>
 
-            <div class="grid md:grid-cols-4 gap-12">
-                <div class="reveal relative">
-                    <div class="text-6xl font-black text-blue-400 opacity-40 absolute -top-10 -left-4">01</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Discovery</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">We audit your current tech stack and identify high-impact automation opportunities.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="reveal bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h4 class="text-xl font-bold">Invoice Generator</h4>
+                        <p class="text-slate-500 text-sm">Professional PDF invoices in seconds.</p>
+                    </div>
+                    <button onclick="openPanel('panel-tool-invoice')" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition">Open Tool</button>
                 </div>
-                <div class="reveal relative" style="transition-delay: 0.1s;">
-                    <div class="text-6xl font-black text-blue-400 opacity-40 absolute -top-10 -left-4">02</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Architecture</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Our engineers design a custom blueprint tailored to your specific operational logic.</p>
-                </div>
-                <div class="reveal relative" style="transition-delay: 0.2s;">
-                    <div class="text-6xl font-black text-blue-400 opacity-40 absolute -top-10 -left-4">03</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Deployment</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">We build and integrate your system, ensuring seamless data flow and team onboarding.</p>
-                </div>
-                <div class="reveal relative" style="transition-delay: 0.3s;">
-                    <div class="text-6xl font-black text-blue-400 opacity-40 absolute -top-10 -left-4">04</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Optimization</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Continuous monitoring and AI fine-tuning to ensure your system scales with you.</p>
+                <div class="reveal bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between" style="transition-delay: 0.1s;">
+                    <div>
+                        <h4 class="text-xl font-bold">Smart QR Creator</h4>
+                        <p class="text-slate-500 text-sm">Custom branded QR codes for assets.</p>
+                    </div>
+                    <button onclick="openPanel('panel-tool-qr')" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-600 transition">Open Tool</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 bg-white border-t border-slate-100 text-slate-400 text-center">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
-            <img src="logo.png" alt="ImoTech Logo" class="h-20 grayscale opacity-40 mb-2">
-            <p class="text-xs uppercase tracking-widest font-semibold">
-                &copy; 2026 ImoTech Solutions. All rights reserved.
-            </p>
-        </div>
-    </footer>
-
-    <div id="panel-contact" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 md:p-16">
-            <button onclick="closePanel('panel-contact')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2">← Back to Home</button>
+    <div id="panel-tool-invoice" class="service-panel fixed inset-0 z-[70] bg-slate-50 overflow-y-auto">
+        <div class="max-w-6xl mx-auto p-6 md:p-12">
+            <button onclick="closePanel('panel-tool-invoice')" class="mb-8 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Site</button>
             
-            <h2 class="text-4xl font-extrabold mb-10 text-center text-slate-900">Request a Consultation</h2>
-            <div class="w-full bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900" frameborder="0">Loading…</iframe>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-3xl shadow-lg">
+                    <h2 class="text-3xl font-black mb-6">Invoice Editor</h2>
+                    <label class="text-xs font-bold uppercase text-slate-400">Business Name</label>
+                    <input type="text" id="businessName" placeholder="ImoTech Solutions" class="tool-input" oninput="liveUpdateInvoice()">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs font-bold uppercase text-slate-400">Client Name</label>
+                            <input type="text" id="clientName" class="tool-input" oninput="liveUpdateInvoice()">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold uppercase text-slate-400">Currency</label>
+                            <select id="currency" class="tool-input" onchange="liveUpdateInvoice()">
+                                <option value="USD">$ USD</option>
+                                <option value="GBP">£ GBP</option>
+                                <option value="EUR">€ EUR</option>
+                                <option value="NGN">₦ NGN</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="itemsContainer">
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" class="desc tool-input" placeholder="Service" oninput="liveUpdateInvoice()">
+                            <input type="number" class="qty tool-input w-20" value="1" oninput="liveUpdateInvoice()">
+                            <input type="number" class="price tool-input w-24" value="0" oninput="liveUpdateInvoice()">
+                        </div>
+                    </div>
+                    <button onclick="addNewItem()" class="w-full py-3 border-2 border-dashed border-slate-200 rounded-xl mb-4 font-bold text-slate-400 hover:border-blue-400 hover:text-blue-400 transition">+ Add Line</button>
+                    <button onclick="downloadPDF()" class="w-full py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg">Download PDF</button>
+                </div>
+
+                <div id="invoicePaper" class="bg-white p-10 shadow-2xl min-h-[700px] text-sm">
+                    <div class="flex justify-between border-b-2 border-slate-900 pb-8 mb-8">
+                        <div>
+                            <h2 id="renderBusiness" class="text-2xl font-black uppercase">YOUR COMPANY</h2>
+                            <p class="text-slate-500">Bill To: <span id="renderClient" class="text-slate-900 font-bold">Client Name</span></p>
+                        </div>
+                        <div class="text-right">
+                            <h1 class="text-4xl font-black text-slate-200">INVOICE</h1>
+                            <p>Date: <span id="renderDate"></span></p>
+                        </div>
+                    </div>
+                    <table class="invoice-table">
+                        <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                        <tbody id="renderItems"></tbody>
+                    </table>
+                    <div class="text-right mt-12">
+                        <p class="text-slate-400 uppercase font-bold text-xs">Total Amount Due</p>
+                        <h2 id="renderTotal" class="text-4xl font-black text-blue-600"></h2>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="panel-1" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
-            <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Business Management Systems</h2>
-            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>We develop custom-built infrastructure designed to centralize and command your entire operation. By integrating <strong>Internal Dashboards</strong> for high-level visibility and <strong>Workflow Management</strong> tools for daily task oversight, we ensure your team stays aligned.</p>
-                <p>Our systems facilitate seamless <strong>Staff Coordination</strong> and provide robust <strong>Performance Reporting</strong>, allowing you to structure your business into a clear, controlled, and scalable system.</p>
+    <div id="panel-tool-qr" class="service-panel fixed inset-0 z-[70] bg-slate-900 text-white overflow-y-auto">
+        <div class="max-w-xl mx-auto p-8 md:p-20 text-center">
+            <button onclick="closePanel('panel-tool-qr')" class="mb-12 text-blue-400 font-bold uppercase tracking-widest text-xs">← Back to Site</button>
+            <h2 class="text-4xl font-extrabold mb-4">Smart QR</h2>
+            <p class="text-slate-400 mb-8">Generate high-fidelity assets for your brand.</p>
+            
+            <input type="text" id="qrInput" placeholder="Enter URL here..." class="tool-input text-slate-900" oninput="updateQRCode()">
+            
+            <div id="qrcode" class="bg-white p-4 rounded-3xl inline-block mb-8"></div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="presetQR('https://')" class="bg-slate-800 py-3 rounded-xl hover:bg-blue-600 transition">Website</button>
+                <button onclick="presetQR('https://wa.me/')" class="bg-slate-800 py-3 rounded-xl hover:bg-blue-600 transition">WhatsApp</button>
             </div>
-        </div>
-    </div>
-
-    <div id="panel-2" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
-            <button onclick="closePanel('panel-2')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">AI & Automation Solutions</h2>
-            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>Our team leverages artificial intelligence to drastically reduce manual workload and sharpen your decision-making. Through <strong>Process Automation</strong> and <strong>Smart Data Handling</strong>, we eliminate administrative bottlenecks.</p>
-                <p>By implementing <strong>AI-Assisted Workflows</strong> and <strong>Automated Insights</strong>, we help you replace repetitive, low-value tasks with intelligent systems that work around the clock.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="panel-3" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
-            <button onclick="closePanel('panel-3')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Web Platforms & Digital Tools</h2>
-            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>We build high-performance functional platforms that serve as the backbone of your digital presence. From sophisticated <strong>Client and Staff Portals</strong> to comprehensive <strong>Service Dashboards</strong>, our focus is on utility rather than just aesthetics.</p>
-                <p>We create <strong>Integrated Digital Ecosystems</strong> that act as more than just a website—they are hardworking business tools designed to drive activity and results.</p>
-            </div>
+            
+            <button id="downloadBtn" onclick="downloadQRCode()" class="hidden w-full py-4 bg-white text-slate-900 rounded-xl font-bold">Download Asset</button>
         </div>
     </div>
 
     <script>
+        // CORE SITE LOGIC
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 150) {
-                    reveals[i].classList.add("active");
-                }
+                if (elementTop < windowHeight - 150) { reveals[i].classList.add("active"); }
             }
         }
         window.addEventListener("scroll", reveal);
@@ -199,10 +233,72 @@
             p.scrollTop = 0;
             p.classList.add('active');
             document.body.style.overflow = 'hidden';
+            if(id === 'panel-tool-qr') updateQRCode(); // Refresh QR on open
         }
         function closePanel(id) {
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = 'auto';
+        }
+
+        // INVOICE TOOL LOGIC
+        document.getElementById('renderDate').textContent = new Date().toLocaleDateString();
+        function addNewItem() {
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 mb-2';
+            div.innerHTML = `<input type="text" class="desc tool-input" placeholder="Service" oninput="liveUpdateInvoice()">
+                             <input type="number" class="qty tool-input w-20" value="1" oninput="liveUpdateInvoice()">
+                             <input type="number" class="price tool-input w-24" value="0" oninput="liveUpdateInvoice()">`;
+            document.getElementById('itemsContainer').appendChild(div);
+        }
+
+        function liveUpdateInvoice() {
+            document.getElementById('renderBusiness').textContent = document.getElementById('businessName').value || 'YOUR COMPANY';
+            document.getElementById('renderClient').textContent = document.getElementById('clientName').value || 'CLIENT NAME';
+            const curr = document.getElementById('currency').value;
+            const rows = document.querySelectorAll('#itemsContainer > div');
+            let total = 0;
+            let html = '';
+            rows.forEach(row => {
+                const d = row.querySelector('.desc').value || 'Service';
+                const q = parseFloat(row.querySelector('.qty').value) || 0;
+                const p = parseFloat(row.querySelector('.price').value) || 0;
+                total += (q * p);
+                html += `<tr><td>${d}</td><td>${q}</td><td>${p.toFixed(2)}</td><td>${(q*p).toFixed(2)}</td></tr>`;
+            });
+            document.getElementById('renderItems').innerHTML = html;
+            document.getElementById('renderTotal').textContent = `${curr} ${total.toLocaleString()}`;
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('invoicePaper');
+            html2canvas(element).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF('p', 'pt', 'a4');
+                pdf.addImage(imgData, 'PNG', 0, 0, 595, (canvas.height * 595) / canvas.width);
+                pdf.save('ImoTech_Invoice.pdf');
+            });
+        }
+
+        // QR TOOL LOGIC
+        function updateQRCode() {
+            const input = document.getElementById("qrInput").value || "ImoTech Solutions";
+            const container = document.getElementById("qrcode");
+            container.innerHTML = "";
+            QRCode.toCanvas(input, { width: 250, margin: 2, color: { dark: "#0f172a" } }, function (err, canvas) {
+                container.appendChild(canvas);
+                document.getElementById("downloadBtn").style.display = "block";
+            });
+        }
+        function presetQR(prefix) {
+            document.getElementById("qrInput").value = prefix;
+            updateQRCode();
+        }
+        function downloadQRCode() {
+            const canvas = document.querySelector("#qrcode canvas");
+            const link = document.createElement('a');
+            link.download = 'imotech-qr.png';
+            link.href = canvas.toDataURL();
+            link.click();
         }
     </script>
 </body>
