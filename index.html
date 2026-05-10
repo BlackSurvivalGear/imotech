@@ -3,314 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImoTech | Professional Invoice Generator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>ImoTech | Smart QR Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --imo-blue: #2563eb;
-            --imo-slate: #0f172a;
-            --imo-border: #e2e8f0;
+            --primary-blue: #2563eb;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
         }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: #f8fafc; 
-            padding: 40px 20px; 
-            color: var(--imo-slate); 
-        }
-
-        /* Branding Title Styling */
-        .brand-title {
+        body {
+            font-family: 'Inter', sans-serif;
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin: 0;
+            box-sizing: border-box;
+            background-color: var(--bg-dark);
+            color: #f8fafc;
         }
-        .title-split-1 { background: linear-gradient(to r, #0f172a, #334155); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .title-split-2 { background: linear-gradient(to r, #2563eb, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .app-container { 
-            max-width: 1200px; 
-            margin: auto; 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 30px; 
-        }
-
-        .editor-section, .preview-section {
-            background: white;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 24px;
-            border: 1px solid var(--imo-border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
-        label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.5px; }
-
-        input, select { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border-radius: 10px; 
-            border: 1px solid var(--imo-border); 
-            background: #fcfdfe;
-            font-size: 14px;
-            transition: all 0.2s;
+        h1 { font-weight: 800; letter-spacing: -0.05em; color: white; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
+        
+        #qrcode {
+            margin: 25px 0;
+            display: inline-block;
+            width: 100%;
         }
-
-        input:focus { outline: none; border-color: var(--imo-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-
-        /* BALANCED ITEM ROW */
-        .item-row { 
-            display: grid; 
-            grid-template-columns: 3fr 70px 110px 90px 40px; 
-            gap: 10px; 
-            align-items: center; 
-            margin-bottom: 10px;
-            background: #f8fafc;
+        input[type="text"], input[type="file"] {
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 16px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-sizing: border-box;
+            background-color: #0f172a;
+            color: white;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .color-group {
+            background: #0f172a;
             padding: 10px;
             border-radius: 12px;
-            border: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        
+        button {
+            padding: 12px 20px;
+            font-weight: 600;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .preset-buttons button {
+            background: #334155;
+            color: white;
+            font-size: 12px;
+        }
+        .preset-buttons button:hover { background: #475569; }
+
+        canvas {
+            border-radius: 12px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
+            height: auto;
         }
 
-        .item-row input { margin-bottom: 0 !important; padding: 8px 10px !important; font-size: 13px !important; }
-        .item-row input[type="number"] { text-align: center; }
-
-        .btn {
-            background: var(--imo-slate); color: #fff; padding: 14px 24px; border: none; border-radius: 12px;
-            cursor: pointer; font-weight: 600; transition: all 0.2s; text-align: center; display: block; width: 100%;
+        #downloadBtn {
+            display: none;
+            background-color: var(--primary-blue);
+            color: white;
+            width: 100%;
+            margin-top: 25px;
+            font-size: 16px;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
-
-        .btn:hover { background: #1e293b; transform: translateY(-1px); }
-        .btn-blue { background: var(--imo-blue); }
-        .btn-blue:hover { background: #1d4ed8; }
-
-        .remove-btn { background: #fee2e2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-        /* Invoice Paper (Preview) */
-        #invoicePaper { 
-            background: white; 
-            padding: 50px; 
-            color: #000; 
-            min-height: 800px;
-            border: 1px solid #eee;
-        }
-
-        .invoice-header { display: flex; justify-content: space-between; margin-bottom: 40px; }
-        .invoice-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
-        .invoice-table th { background: #f8fafc; border-bottom: 2px solid #000; padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; }
-        .invoice-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
-
-        .signature-line { margin-top: 60px; border-top: 1px solid #000; width: 200px; padding-top: 10px; font-size: 13px; }
-        .footer-logo { text-align: center; color: #94a3b8; margin-top: 50px; font-weight: 800; letter-spacing: 2px; font-size: 12px; }
-
-        @media (min-width: 1024px) {
-            .app-container { grid-template-columns: 500px 1fr; }
-        }
+        #downloadBtn:hover { transform: translateY(-2px); background-color: #1d4ed8; }
     </style>
 </head>
 <body>
 
-<div class="brand-title">
-    <span class="title-split-1">ImoTech</span> <span class="title-split-2">Invoice</span>
-</div>
-
-<div class="app-container">
-    <div class="editor-section">
-        <label>Company Branding</label>
-        <input type="text" id="businessName" placeholder="ImoTech Solutions" oninput="liveUpdate()">
+    <div class="container">
+        <img src="logo.png" alt="ImoTech" style="height: 40px; margin-bottom: 20px;" onerror="this.style.display='none'">
+        <h1>Smart QR Generator</h1>
+        <p>Generate secure, custom-branded QR codes instantly.</p>
         
-        <label>Upload Logo</label>
-        <input type="file" id="logoUpload" accept="image/*">
+        <input type="text" id="qrInput" placeholder="Enter URL or content" oninput="updateQRCode()">
 
-        <label>Billing To</label>
-        <input type="text" id="clientName" placeholder="Client or Company Name" oninput="liveUpdate()">
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            <div>
-                <label>Invoice Number</label>
-                <input type="text" id="invoiceNumber" oninput="liveUpdate()">
+        <div class="controls-grid">
+            <div class="color-group">
+                <label>Foreground</label>
+                <input type="color" id="foregroundColor" value="#0f172a" onchange="updateQRCode()" style="width: 30px; height: 30px; border: none; background: none; cursor: pointer;">
             </div>
-            <div>
-                <label>Currency</label>
-                <select id="currency" onchange="liveUpdate()">
-                    <option value="USD">USD ($)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="NGN">NGN (₦)</option>
-                    <option value="ZAR">ZAR (R)</option>
-                </select>
+            <div class="color-group">
+                <label>Background</label>
+                <input type="color" id="backgroundColor" value="#ffffff" onchange="updateQRCode()" style="width: 30px; height: 30px; border: none; background: none; cursor: pointer;">
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 3fr 70px 110px 90px 40px; gap: 10px; padding: 0 12px;">
-            <label>Description</label>
-            <label style="text-align: center;">Qty</label>
-            <label>Price</label>
-            <label>Total</label>
-            <span></span>
+        <div style="text-align: left; margin-top: 20px;">
+            <label>Logo Overlay (Optional)</label>
+            <input type="file" id="imageInput" accept="image/*" onchange="updateQRCode()">
         </div>
 
-        <div id="itemsContainer">
-            <div class="item-row">
-                <input type="text" class="desc" placeholder="Engineering Service" oninput="liveUpdate()">
-                <input type="number" class="qty" value="1" oninput="liveUpdate()">
-                <input type="number" class="price" value="0" step="0.01" oninput="liveUpdate()">
-                <span class="rowTotal" style="font-size: 12px; font-weight: 700; color: var(--imo-blue); text-align: right;">0.00</span>
-                <button class="remove-btn" onclick="this.parentElement.remove(); liveUpdate()">✕</button>
-            </div>
+        <div class="preset-buttons">
+            <button onclick="presetQR('https://')">Website</button>
+            <button onclick="presetQR('mailto:')">Email</button>
+            <button onclick="presetQR('https://wa.me/')">WhatsApp</button>
+            <button onclick="presetQR('https://linkedin.com/in/')">LinkedIn</button>
         </div>
 
-        <button class="btn" onclick="addNewItem()" style="background: #f1f5f9; color: var(--imo-slate); margin-top: 10px; font-size: 13px;">+ Add Service Line</button>
+        <div id="qrcode"></div>
         
-        <div style="margin-top: 40px;">
-            <button class="btn btn-blue" onclick="downloadPDF()">Generate & Download PDF</button>
-        </div>
+        <button id="downloadBtn" onclick="downloadQRCode()">Download Asset</button>
     </div>
 
-    <div class="preview-section">
-        <div id="invoicePaper">
-            <div class="invoice-header">
-                <div>
-                    <img id="renderLogo" style="max-height: 55px; display: none; margin-bottom: 20px;">
-                    <h2 id="renderBusiness" style="margin:0; font-weight: 800; text-transform: uppercase; font-size: 1.4rem;"></h2>
-                </div>
-                <div style="text-align: right;">
-                    <h1 style="margin:0; color:#f1f5f9; font-size: 45px; letter-spacing: 2px; font-weight: 900;">INVOICE</h1>
-                    <p style="margin:5px 0; font-size: 13px;"><strong>REF:</strong> <span id="renderNumber"></span></p>
-                    <p style="margin:5px 0; font-size: 13px;"><strong>DATE:</strong> <span id="renderDate"></span></p>
-                </div>
-            </div>
+    <script>
+        function updateQRCode() {
+            const qrInput = document.getElementById("qrInput").value;
+            const foregroundColor = document.getElementById("foregroundColor").value;
+            const backgroundColor = document.getElementById("backgroundColor").value;
+            const imageInput = document.getElementById("imageInput").files[0];
+            const qrCodeContainer = document.getElementById("qrcode");
+            const downloadBtn = document.getElementById("downloadBtn");
 
-            <div style="margin-bottom: 40px;">
-                <label style="color: #94a3b8; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Bill To</label>
-                <h3 id="renderClient" style="margin:0; font-size: 1.1rem; font-weight: 700;"></h3>
-            </div>
+            qrCodeContainer.innerHTML = "";
+            downloadBtn.style.display = "none";
 
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Service Description</th>
-                        <th style="width: 50px; text-align: center;">Qty</th>
-                        <th style="width: 100px; text-align: right;">Rate</th>
-                        <th style="width: 100px; text-align: right;">Amount</th>
-                    </tr>
-                </thead>
-                <tbody id="renderItems"></tbody>
-            </table>
+            if (qrInput.trim() !== "") {
+                QRCode.toCanvas(qrInput, { 
+                    errorCorrectionLevel: 'H', 
+                    width: 400,
+                    margin: 4,
+                    color: {
+                        dark: foregroundColor,
+                        light: backgroundColor
+                    }
+                }, function (err, canvas) {
+                    if (err) return;
 
-            <div style="text-align: right; margin-top: 30px;">
-                <p style="font-size: 12px; color: #64748b; margin-bottom: 5px; font-weight: 600; text-transform: uppercase;">Total Balance Due</p>
-                <h2 id="renderTotal" style="margin:0; font-size: 2.4rem; font-weight: 800; color: var(--imo-slate);"></h2>
-            </div>
+                    const ctx = canvas.getContext("2d");
 
-            <div class="signature-line">Authorized Signature</div>
+                    // Brand tag at the bottom
+                    ctx.font = "bold 14px Inter, Arial";
+                    ctx.fillStyle = foregroundColor;
+                    ctx.textAlign = "center";
+                    ctx.fillText("IMOTECH SOLUTIONS", canvas.width / 2, canvas.height - 8);
 
-            <p style="margin-top: 80px; font-size: 11px; color: #cbd5e1; text-align: center; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">
-                Solutions Engineered by ImoTech
-            </p>
-        </div>
-    </div>
-</div>
+                    qrCodeContainer.appendChild(canvas);
 
-<div class="footer-logo">IMOTECH SOLUTIONS</div>
+                    if (imageInput) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const img = new Image();
+                            img.src = e.target.result;
+                            img.onload = function () {
+                                const imgSize = canvas.width / 5;
+                                // White circle background for logo
+                                ctx.fillStyle = backgroundColor;
+                                ctx.beginPath();
+                                ctx.arc(canvas.width/2, canvas.height/2, (imgSize/2) + 5, 0, Math.PI * 2);
+                                ctx.fill();
+                                // Draw logo
+                                ctx.drawImage(img, canvas.width / 2 - imgSize / 2, canvas.height / 2 - imgSize / 2, imgSize, imgSize);
+                            };
+                        };
+                        reader.readAsDataURL(imageInput);
+                    }
 
-<script>
-let logoBase64 = '';
+                    downloadBtn.style.display = "block";
+                    downloadBtn.canvas = canvas;
+                });
+            }
+        }
 
-// Generate Initial Data
-document.getElementById('invoiceNumber').value = 'ITS-' + Math.floor(Math.random() * 90000 + 10000);
-document.getElementById('renderDate').textContent = new Date().toLocaleDateString('en-GB');
+        function downloadQRCode() {
+            const canvas = document.getElementById("downloadBtn").canvas;
+            if (canvas) {
+                const link = document.createElement("a");
+                link.href = canvas.toDataURL("image/png");
+                link.download = "ImoTech_SmartQR.png";
+                link.click();
+            }
+        }
 
-// Logo Handling
-document.getElementById('logoUpload').addEventListener('change', function(e){
-    const reader = new FileReader();
-    reader.onload = function(){
-        logoBase64 = reader.result;
-        const img = document.getElementById('renderLogo');
-        img.src = logoBase64;
-        img.style.display = 'block';
-        liveUpdate();
-    };
-    reader.readAsDataURL(e.target.files[0]);
-});
-
-function addNewItem() {
-    const container = document.getElementById('itemsContainer');
-    const div = document.createElement('div');
-    div.className = 'item-row';
-    div.innerHTML = `
-        <input type="text" class="desc" placeholder="Engineering Service" oninput="liveUpdate()">
-        <input type="number" class="qty" value="1" oninput="liveUpdate()">
-        <input type="number" class="price" value="0" step="0.01" oninput="liveUpdate()">
-        <span class="rowTotal" style="font-size: 12px; font-weight: 700; color: var(--imo-blue); text-align: right;">0.00</span>
-        <button class="remove-btn" onclick="this.parentElement.remove(); liveUpdate()">✕</button>
-    `;
-    container.appendChild(div);
-}
-
-function liveUpdate() {
-    document.getElementById('renderBusiness').textContent = document.getElementById('businessName').value || 'IMOTECH SOLUTIONS';
-    document.getElementById('renderClient').textContent = document.getElementById('clientName').value || 'ATTN: VALUED CLIENT';
-    document.getElementById('renderNumber').textContent = document.getElementById('invoiceNumber').value;
-    
-    const currency = document.getElementById('currency').value;
-    const items = document.querySelectorAll('.item-row');
-    const renderTable = document.getElementById('renderItems');
-    renderTable.innerHTML = '';
-    
-    let grandTotal = 0;
-
-    items.forEach(item => {
-        const desc = item.querySelector('.desc').value || 'Standard Service';
-        const qty = parseFloat(item.querySelector('.qty').value) || 0;
-        const price = parseFloat(item.querySelector('.price').value) || 0;
-        const total = qty * price;
-        grandTotal += total;
-
-        item.querySelector('.rowTotal').textContent = total.toFixed(2);
-
-        const tr = `<tr>
-            <td style="font-weight: 500; color: #1e293b;">${desc}</td>
-            <td style="text-align: center;">${qty}</td>
-            <td style="text-align: right;">${price.toFixed(2)}</td>
-            <td style="text-align: right; font-weight: 700;">${total.toFixed(2)}</td>
-        </tr>`;
-        renderTable.innerHTML += tr;
-    });
-
-    document.getElementById('renderTotal').textContent = `${currency} ${grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-}
-
-function downloadPDF() {
-    const element = document.getElementById('invoicePaper');
-    const invNum = document.getElementById('invoiceNumber').value;
-    
-    const opt = {
-        margin: 0,
-        filename: `Invoice_${invNum}.pdf`,
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 3, useCORS: true, letterRendering: true },
-        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2canvas(element, opt.html2canvas).then(canvas => {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'pt', 'a4');
-        const imgData = canvas.toDataURL('image/png');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(opt.filename);
-    });
-}
-
-// Kickoff
-liveUpdate();
-</script>
+        function presetQR(data) {
+            document.getElementById("qrInput").value = data;
+            document.getElementById("qrInput").focus();
+            updateQRCode();
+        }
+    </script>
 </body>
 </html>
