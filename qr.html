@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Generator — ImoTech</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif;}</style>
+</head>
+<body class="bg-white text-slate-900 p-6">
+
+<h2 class="text-2xl font-extrabold mb-6">QR Code Generator</h2>
+
+<div class="grid md:grid-cols-2 gap-8">
+
+<!-- INPUT -->
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Content</label>
+<textarea id="qr-text" rows="3" placeholder="Enter URL, text, email, phone…"
+  class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+</div>
+
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Size (px)</label>
+<input id="qr-size" type="number" value="256" min="64" max="1024" step="32"
+  class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Error Correction</label>
+<select id="qr-ec"
+  class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<option value="L">Low (7%)</option>
+<option value="M" selected>Medium (15%)</option>
+<option value="Q">Quartile (25%)</option>
+<option value="H">High (30%)</option>
+</select>
+</div>
+</div>
+
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Foreground</label>
+<div class="flex items-center gap-2">
+<input id="qr-fg" type="color" value="#0f172a" class="w-10 h-10 rounded cursor-pointer border-0">
+<span id="qr-fg-hex" class="text-sm text-slate-500">#0f172a</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Background</label>
+<div class="flex items-center gap-2">
+<input id="qr-bg" type="color" value="#f8fafc" class="w-10 h-10 rounded cursor-pointer border-0">
+<span id="qr-bg-hex" class="text-sm text-slate-500">#f8fafc</span>
+</div>
+</div>
+</div>
+
+<div class="flex gap-3 flex-wrap">
+<button onclick="presetTheme('#0f172a','#f8fafc')" class="text-xs px-3 py-1 rounded-full bg-slate-900 text-white font-semibold">Slate</button>
+<button onclick="presetTheme('#1e40af','#eff6ff')" class="text-xs px-3 py-1 rounded-full bg-blue-700 text-white font-semibold">Blue</button>
+<button onclick="presetTheme('#0f172a','#ffffff')" class="text-xs px-3 py-1 rounded-full bg-slate-900 text-white font-semibold border border-slate-300">Classic</button>
+</div>
+
+<button onclick="generateQR()"
+  class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition">
+Generate QR Code
+</button>
+</div>
+
+<!-- OUTPUT -->
+<div class="flex flex-col items-center justify-center">
+<div id="qr-output" class="bg-slate-50 border border-slate-200 rounded-2xl p-8 flex items-center justify-center min-h-[300px]">
+<p class="text-slate-400 text-sm">Your QR code will appear here</p>
+</div>
+<button id="qr-download" onclick="downloadQR()" style="display:none"
+  class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition">
+Download PNG
+</button>
+</div>
+
+</div>
+
+<script>
+const ecMap = { L: QRCode.CorrectLevel.L, M: QRCode.CorrectLevel.M, Q: QRCode.CorrectLevel.Q, H: QRCode.CorrectLevel.H };
+let qrInstance = null;
+
+document.getElementById('qr-fg').addEventListener('input', e => {
+  document.getElementById('qr-fg-hex').textContent = e.target.value;
+});
+document.getElementById('qr-bg').addEventListener('input', e => {
+  document.getElementById('qr-bg-hex').textContent = e.target.value;
+});
+
+function presetTheme(fg, bg) {
+  document.getElementById('qr-fg').value = fg;
+  document.getElementById('qr-bg').value = bg;
+  document.getElementById('qr-fg-hex').textContent = fg;
+  document.getElementById('qr-bg-hex').textContent = bg;
+}
+
+function generateQR() {
+  const text = document.getElementById('qr-text').value.trim();
+  if (!text) { alert('Please enter some content.'); return; }
+
+  const size = parseInt(document.getElementById('qr-size').value) || 256;
+  const ec = document.getElementById('qr-ec').value;
+  const fg = document.getElementById('qr-fg').value;
+  const bg = document.getElementById('qr-bg').value;
+  const output = document.getElementById('qr-output');
+
+  output.innerHTML = '';
+  qrInstance = new QRCode(output, {
+    text: text,
+    width: size,
+    height: size,
+    colorDark: fg,
+    colorLight: bg,
+    correctLevel: ecMap[ec]
+  });
+
+  document.getElementById('qr-download').style.display = 'inline-block';
+}
+
+function downloadQR() {
+  const canvas = document.querySelector('#qr-output canvas');
+  if (!canvas) return;
+  const link = document.createElement('a');
+  link.download = 'qrcode.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
+</body>
+</html>
