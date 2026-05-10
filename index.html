@@ -24,17 +24,21 @@ html { scroll-behavior: smooth; }
 }
 .service-panel.active { transform: translateX(0); }
 
+.panel-bg-logo {
+    background-image: linear-gradient(rgba(255,255,255,0.94), rgba(255,255,255,0.94)), url('logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
+    background-attachment: fixed;
+}
+
 .reveal { opacity:0; transform:translateY(30px); transition:all 0.8s; }
 .reveal.active { opacity:1; transform:translateY(0); }
 
-.hover-lift:hover { transform:translateY(-10px); }
+.hover-lift { transition: all 0.3s ease; }
+.hover-lift:hover { transform: translateY(-10px); }
 
-.tab-btn {
-    padding:10px 20px;
-    border-radius:10px;
-    font-weight:600;
-    cursor:pointer;
-}
+.tab-btn { padding:10px 20px; border-radius:10px; font-weight:600; cursor:pointer; }
 .tab-active { background:#0f172a; color:white; }
 .tab-inactive { background:#f1f5f9; }
 </style>
@@ -43,45 +47,59 @@ html { scroll-behavior: smooth; }
 <body class="bg-white text-slate-900">
 
 <!-- NAV -->
-<nav class="glass sticky top-0 z-40 border-b">
+<nav class="glass sticky top-0 z-40 border-b border-slate-100">
 <div class="max-w-6xl mx-auto px-6 h-24 flex justify-between items-center">
 <img src="logo.png" class="h-14">
-<button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold">
+<button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700">
 Request Consultation
 </button>
 </div>
 </nav>
 
 <!-- HERO -->
-<header class="hero-gradient py-32 text-center">
-<h1 class="text-6xl font-extrabold mb-6">
+<header class="hero-gradient py-32 text-center border-b">
+<div class="max-w-4xl mx-auto reveal">
+<h1 class="text-5xl md:text-7xl font-extrabold mb-8">
 ImoTech Solutions.<br><span class="text-blue-600">Intelligent Systems.</span>
 </h1>
-<p class="text-slate-500 max-w-xl mx-auto mb-10">
-We design and deploy AI-driven software that improves efficiency and control.
+<p class="text-xl text-slate-500 mb-12 max-w-2xl mx-auto">
+We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
 </p>
 <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold">
 Our Services
 </a>
+</div>
 </header>
 
 <!-- SERVICES -->
 <section id="services" class="py-24 max-w-6xl mx-auto px-6">
-<div class="grid md:grid-cols-3 gap-8">
 
-<div class="hover-lift bg-slate-50 p-10 rounded-3xl">
-<h3 class="text-2xl font-bold mb-4">Management</h3>
-<p>Full operational systems.</p>
+<div class="text-center mb-16 reveal">
+<h2 class="text-3xl font-extrabold mb-4">Our Core Capabilities</h2>
+<p class="text-slate-500">Explore how our customized systems transform business operations.</p>
 </div>
 
-<div class="hover-lift bg-slate-50 p-10 rounded-3xl">
-<h3 class="text-2xl font-bold mb-4">Automation</h3>
-<p>AI-driven workflows.</p>
+<div class="grid lg:grid-cols-3 gap-8">
+
+<div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border flex flex-col">
+<div class="text-5xl mb-6">📊</div>
+<h3 class="text-2xl font-extrabold mb-4">Management</h3>
+<p class="text-slate-600 mb-8 flex-grow">Business Management Systems for full operational oversight.</p>
+<button onclick="openPanel('panel-1')" class="w-full py-4 border rounded-xl font-bold hover:bg-blue-600 hover:text-white">Learn More</button>
 </div>
 
-<div class="hover-lift bg-slate-50 p-10 rounded-3xl">
-<h3 class="text-2xl font-bold mb-4">Platforms</h3>
-<p>Business infrastructure.</p>
+<div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border flex flex-col">
+<div class="text-5xl mb-6">🤖</div>
+<h3 class="text-2xl font-extrabold mb-4">Automation</h3>
+<p class="text-slate-600 mb-8 flex-grow">AI & Automation Solutions to replace repetitive tasks.</p>
+<button onclick="openPanel('panel-2')" class="w-full py-4 border rounded-xl font-bold hover:bg-blue-600 hover:text-white">Learn More</button>
+</div>
+
+<div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border flex flex-col">
+<div class="text-5xl mb-6">🌐</div>
+<h3 class="text-2xl font-extrabold mb-4">Platforms</h3>
+<p class="text-slate-600 mb-8 flex-grow">Web Platforms & Digital Tools that work for your business.</p>
+<button onclick="openPanel('panel-3')" class="w-full py-4 border rounded-xl font-bold hover:bg-blue-600 hover:text-white">Learn More</button>
 </div>
 
 </div>
@@ -92,58 +110,71 @@ Our Services
 <h2 class="text-3xl font-extrabold mb-4">Free Business Tools</h2>
 <p class="text-slate-500 mb-10">Instant tools. No signup required.</p>
 
-<button onclick="openPanel('panel-tools')" 
-class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold">
+<button onclick="openPanel('panel-tools')" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold">
 Open Business Toolkit
 </button>
 </section>
 
 <!-- FOOTER -->
-<footer class="py-16 text-center text-slate-400">
-© 2026 ImoTech Solutions
+<footer class="py-16 text-center text-slate-400 border-t">
+<img src="logo.png" class="h-16 mx-auto opacity-40 mb-4">
+<p class="text-xs uppercase">&copy; 2026 ImoTech Solutions</p>
 </footer>
 
 <!-- CONTACT PANEL -->
-<div id="panel-contact" class="service-panel bg-white">
-<div class="p-10 max-w-4xl mx-auto">
-<button onclick="closePanel('panel-contact')">← Back</button>
-
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true"
-width="100%" height="900"></iframe>
+<div id="panel-contact" class="service-panel bg-white overflow-y-auto">
+<div class="max-w-4xl mx-auto p-10">
+<button onclick="closePanel('panel-contact')" class="mb-6 text-blue-600 font-bold">← Back</button>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900"></iframe>
 </div>
 </div>
 
-<!-- BUSINESS TOOLKIT PANEL -->
-<div id="panel-tools" class="service-panel bg-white">
+<!-- SERVICE PANELS -->
+<div id="panel-1" class="service-panel panel-bg-logo overflow-y-auto">
+<div class="max-w-4xl mx-auto p-10">
+<button onclick="closePanel('panel-1')" class="mb-6 text-blue-600 font-bold">← Back</button>
+<h2 class="text-4xl font-extrabold mb-6">Business Management Systems</h2>
+<p class="text-slate-600 mb-4">We develop custom-built infrastructure designed to centralize and command your entire operation.</p>
+<p class="text-slate-600">Dashboards, workflow systems, staff coordination and performance reporting.</p>
+</div>
+</div>
 
+<div id="panel-2" class="service-panel panel-bg-logo overflow-y-auto">
+<div class="max-w-4xl mx-auto p-10">
+<button onclick="closePanel('panel-2')" class="mb-6 text-blue-600 font-bold">← Back</button>
+<h2 class="text-4xl font-extrabold mb-6">AI & Automation Solutions</h2>
+<p class="text-slate-600 mb-4">We leverage AI to reduce manual workload and improve decision making.</p>
+<p class="text-slate-600">Automation, smart data handling, AI workflows.</p>
+</div>
+</div>
+
+<div id="panel-3" class="service-panel panel-bg-logo overflow-y-auto">
+<div class="max-w-4xl mx-auto p-10">
+<button onclick="closePanel('panel-3')" class="mb-6 text-blue-600 font-bold">← Back</button>
+<h2 class="text-4xl font-extrabold mb-6">Web Platforms & Digital Tools</h2>
+<p class="text-slate-600 mb-4">We build functional platforms that act as operational systems.</p>
+<p class="text-slate-600">Portals, dashboards, integrated ecosystems.</p>
+</div>
+</div>
+
+<!-- TOOLKIT PANEL -->
+<div id="panel-tools" class="service-panel bg-white overflow-y-auto">
 <div class="max-w-6xl mx-auto p-6">
 
-<button onclick="closePanel('panel-tools')" class="mb-6 text-blue-600 font-bold">
-← Back to Home
-</button>
+<button onclick="closePanel('panel-tools')" class="mb-6 text-blue-600 font-bold">← Back</button>
 
 <h2 class="text-3xl font-extrabold mb-6">Business Toolkit</h2>
 
-<!-- Tabs -->
 <div class="flex gap-4 mb-6">
-<button id="tab-invoice" class="tab-btn tab-active" onclick="switchTab('invoice')">Invoice Tool</button>
+<button id="tab-invoice" class="tab-btn tab-active" onclick="switchTab('invoice')">Invoice</button>
 <button id="tab-qr" class="tab-btn tab-inactive" onclick="switchTab('qr')">QR Generator</button>
 </div>
 
-<!-- Content -->
-<div id="tool-content">
-
 <iframe id="iframe-invoice" src="invoice.html" width="100%" height="900"></iframe>
-
 <iframe id="iframe-qr" src="qr.html" width="100%" height="900" style="display:none;"></iframe>
 
-</div>
-
-<!-- CTA -->
-<div class="text-center mt-10">
-<p class="text-slate-500 mb-4">Need a full system built for your business?</p>
-<button onclick="openPanel('panel-contact')" 
-class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold">
+<div class="text-center mt-8">
+<button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold">
 Request Custom System
 </button>
 </div>
@@ -153,19 +184,27 @@ Request Custom System
 
 <!-- SCRIPT -->
 <script>
+function reveal(){
+document.querySelectorAll(".reveal").forEach(el=>{
+if(el.getBoundingClientRect().top < window.innerHeight - 150){
+el.classList.add("active");
+}
+});
+}
+window.addEventListener("scroll", reveal);
+reveal();
 
 function openPanel(id){
-document.getElementById(id).classList.add('active');
-document.body.style.overflow='hidden';
+document.getElementById(id).classList.add("active");
+document.body.style.overflow="hidden";
 }
 
 function closePanel(id){
-document.getElementById(id).classList.remove('active');
-document.body.style.overflow='auto';
+document.getElementById(id).classList.remove("active");
+document.body.style.overflow="auto";
 }
 
 function switchTab(tab){
-
 document.getElementById('iframe-invoice').style.display = (tab==='invoice') ? 'block':'none';
 document.getElementById('iframe-qr').style.display = (tab==='qr') ? 'block':'none';
 
@@ -175,7 +214,6 @@ document.getElementById('tab-invoice').classList.toggle('tab-inactive', tab!=='i
 document.getElementById('tab-qr').classList.toggle('tab-active', tab==='qr');
 document.getElementById('tab-qr').classList.toggle('tab-inactive', tab!=='qr');
 }
-
 </script>
 
 </body>
