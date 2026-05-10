@@ -28,91 +28,127 @@
                     <img src="logo.png" alt="Logo" class="h-full w-auto">
                 </a>
             </div>
-            <div class="w-1/3 flex justify-end">
-                <a href="#contact" class="font-bold text-[10px] uppercase tracking-[0.3em] text-blue-600 hover:text-blue-800 transition">Get Started</a>
-            </div>
+            <div class="w-1/3"></div>
         </div>
     </nav>
 
-    <header id="home" class="hero-gradient py-24 px-6 text-white text-center">
+    <header id="home" class="hero-gradient py-32 px-6 text-white text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter">AI-Driven Systems.</h1>
-            <p class="text-lg text-slate-400 mb-10 font-light">Software that improves efficiency and gives you full control.</p>
-            <a href="#solutions" class="bg-blue-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-blue-700 transition">Explore Solutions</a>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight">
+                Imotech Solutions. <br><span class="text-blue-500">Intelligent Systems.</span>
+            </h1>
+            <p class="text-xl text-slate-400 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+                We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#solutions" class="bg-white text-slate-900 px-10 py-4 rounded-xl font-bold hover:bg-blue-50 transition text-lg">
+                    View Solutions
+                </a>
+                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-xl text-lg">
+                    Request a Consultation
+                </button>
+            </div>
         </div>
     </header>
 
-    <section id="solutions" class="py-20 max-w-6xl mx-auto px-6">
+    <section id="solutions" class="py-24 max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold mb-4">Our Core Capabilities</h2>
+            <p class="text-slate-600 max-w-xl mx-auto">Explore how our customized systems transform business operations.</p>
+        </div>
         <div class="grid lg:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-xl font-extrabold mb-4 uppercase text-xs tracking-widest text-blue-600">01. Management</h3>
-                <p class="text-sm text-slate-500 mb-6 flex-grow">Business Management Systems for full operational oversight.</p>
-                <button onclick="openPanel('panel-1')" class="w-full py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</button>
+            <div class="bg-white p-10 rounded-3xl shadow-lg border border-slate-100 flex flex-col hover:border-blue-100 transition duration-300">
+                <div class="text-5xl mb-6">📊</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-950">Management</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow">Business Management Systems for full operational oversight.</p>
+                <button onclick="openPanel('panel-1')" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-blue-600 transition">Go to Service</button>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-xl font-extrabold mb-4 uppercase text-xs tracking-widest text-blue-600">02. Automation</h3>
-                <p class="text-sm text-slate-500 mb-6 flex-grow">AI & Automation Solutions to replace repetitive tasks.</p>
-                <button onclick="openPanel('panel-2')" class="w-full py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</button>
+            <div class="bg-white p-10 rounded-3xl shadow-lg border border-slate-100 flex flex-col hover:border-blue-100 transition duration-300">
+                <div class="text-5xl mb-6">🤖</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-950">Automation</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow">AI & Automation Solutions to replace repetitive tasks.</p>
+                <button onclick="openPanel('panel-2')" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-blue-600 transition">Go to Service</button>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-xl font-extrabold mb-4 uppercase text-xs tracking-widest text-blue-600">03. Platforms</h3>
-                <p class="text-sm text-slate-500 mb-6 flex-grow">Web Platforms & Digital Tools that work for your business.</p>
-                <button onclick="openPanel('panel-3')" class="w-full py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-slate-100">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-extrabold mb-8">Start Your Transformation</h2>
-            <div class="w-full bg-white rounded-2xl overflow-hidden shadow-xl">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="800" frameborder="0">Loading…</iframe>
+            <div class="bg-white p-10 rounded-3xl shadow-lg border border-slate-100 flex flex-col hover:border-blue-100 transition duration-300">
+                <div class="text-5xl mb-6">🌐</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-950">Platforms</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow">Web Platforms & Digital Tools that work for your business.</p>
+                <button onclick="openPanel('panel-3')" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-blue-600 transition">Go to Service</button>
             </div>
         </div>
     </section>
 
-    <div id="panel-1" class="service-panel fixed inset-0 z-[60] bg-white p-8 md:p-20 overflow-y-auto">
-        <button onclick="closePanel('panel-1')" class="mb-8 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-        <h2 class="text-4xl font-extrabold mb-6">Business Management Systems</h2>
-        <div class="space-y-6 text-slate-600 max-w-2xl">
-            <p>Custom-built systems designed to manage your operations:</p>
-            <ul class="list-disc pl-5 space-y-2">
-                <li>Internal dashboards</li>
-                <li>Workflow and task management</li>
-                <li>Staff and process coordination</li>
-                <li>Reporting and performance tracking</li>
-            </ul>
-            <p class="font-bold text-slate-900">Structure your business into a clear, controlled system.</p>
+    <footer class="py-16 bg-slate-950 text-slate-500 text-center mt-20">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
+            <img src="logo.png" alt="Logo" class="h-10 opacity-60 mb-2">
+            <p class="text-sm">
+                &copy; 2026 Imotech Solutions. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+
+    <div id="panel-contact" class="service-panel fixed inset-0 z-[60] bg-slate-100 overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-16">
+            <button onclick="closePanel('panel-contact')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2">← Back to Home</button>
+            <h2 class="text-4xl font-extrabold mb-10 text-center">Request a Consultation</h2>
+            <div class="w-full bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900" frameborder="0">Loading…</iframe>
+            </div>
         </div>
     </div>
 
-    <div id="panel-2" class="service-panel fixed inset-0 z-[60] bg-white p-8 md:p-20 overflow-y-auto">
-        <button onclick="closePanel('panel-2')" class="mb-8 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-        <h2 class="text-4xl font-extrabold mb-6">AI & Automation Solutions</h2>
-        <div class="space-y-6 text-slate-600 max-w-2xl">
-            <p>We use AI to reduce manual workload and improve decision-making:</p>
-            <ul class="list-disc pl-5 space-y-2">
-                <li>Process automation</li>
-                <li>Smart data handling</li>
-                <li>AI-assisted workflows</li>
-                <li>Automated reporting and insights</li>
-            </ul>
-            <p class="font-bold text-slate-900">Replace repetitive tasks with intelligent automation.</p>
+    <div id="panel-1" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20">
+            <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <span class="text-5xl mb-6 block">📊</span>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-950 tracking-tight">Business Management Systems</h2>
+            <div class="space-y-6 text-lg text-slate-700 leading-relaxed">
+                <p>Custom-built systems designed to manage your operations:</p>
+                <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
+                    <li>Internal dashboards for real-time data</li>
+                    <li>Workflow and task management tools</li>
+                    <li>Staff and process coordination</li>
+                    <li>Reporting and performance tracking</li>
+                </ul>
+                <p class="font-bold text-slate-950 mt-10 p-6 bg-slate-50 rounded-xl border border-slate-100">Structure your business into a clear, controlled system.</p>
+            </div>
         </div>
     </div>
 
-    <div id="panel-3" class="service-panel fixed inset-0 z-[60] bg-white p-8 md:p-20 overflow-y-auto">
-        <button onclick="closePanel('panel-3')" class="mb-8 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
-        <h2 class="text-4xl font-extrabold mb-6">Web Platforms & Digital Tools</h2>
-        <div class="space-y-6 text-slate-600 max-w-2xl">
-            <p>We build functional platforms that support real business activity:</p>
-            <ul class="list-disc pl-5 space-y-2">
-                <li>Company websites</li>
-                <li>Client and staff portals</li>
-                <li>Service platforms and dashboards</li>
-                <li>Integrated digital ecosystems</li>
-            </ul>
-            <p class="font-bold text-slate-900">More than a website—a working business tool.</p>
+    <div id="panel-2" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20">
+            <button onclick="closePanel('panel-2')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <span class="text-5xl mb-6 block">🤖</span>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-950 tracking-tight">AI & Automation Solutions</h2>
+            <div class="space-y-6 text-lg text-slate-700 leading-relaxed">
+                <p>We use AI to reduce manual workload and improve decision-making:</p>
+                <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
+                    <li>Process automation for repetitive tasks</li>
+                    <li>Smart data handling and organization</li>
+                    <li>AI-assisted workflows</li>
+                    <li>Automated reporting and insights</li>
+                </ul>
+                <p class="font-bold text-slate-950 mt-10 p-6 bg-slate-50 rounded-xl border border-slate-100">Replace repetitive tasks with intelligent automation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-3" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20">
+            <button onclick="closePanel('panel-3')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <span class="text-5xl mb-6 block">🌐</span>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-950 tracking-tight">Web Platforms & Digital Tools</h2>
+            <div class="space-y-6 text-lg text-slate-700 leading-relaxed">
+                <p>We build functional platforms that support real business activity:</p>
+                <ul class="list-disc pl-5 space-y-3 marker:text-blue-600">
+                    <li>Company websites</li>
+                    <li>Client and staff portals</li>
+                    <li>Service platforms and dashboards</li>
+                    <li>Integrated digital ecosystems</li>
+                </ul>
+                <p class="font-bold text-slate-950 mt-10 p-6 bg-slate-50 rounded-xl border border-slate-100">More than a website—a working business tool.</p>
+            </div>
         </div>
     </div>
 
