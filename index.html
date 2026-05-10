@@ -3,227 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImoTech | Smart QR Generator</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <title>ImoTech Solutions | AI & Software Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-blue: #2563eb;
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            box-sizing: border-box;
-            background-color: var(--bg-dark);
-            color: #f8fafc;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        h1 { font-weight: 800; letter-spacing: -0.05em; color: white; margin-bottom: 10px; }
-        p { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(8px); }
+        .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
         
-        #qrcode {
-            margin: 25px 0;
-            display: inline-block;
-            width: 100%;
-        }
-        input[type="text"], input[type="file"] {
-            padding: 12px;
-            margin: 10px 0;
-            width: 100%;
-            font-size: 16px;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            box-sizing: border-box;
-            background-color: #0f172a;
-            color: white;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-        .controls-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .color-group {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        /* Panel Transitions */
+        .service-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .service-panel.active { transform: translateX(0); }
         
-        button {
-            padding: 12px 20px;
-            font-weight: 600;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .preset-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-        }
-        .preset-buttons button {
-            background: #334155;
-            color: white;
-            font-size: 12px;
-        }
-        .preset-buttons button:hover { background: #475569; }
-
-        canvas {
-            border-radius: 12px;
-            background: white;
-            padding: 10px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            max-width: 100%;
-            height: auto;
+        /* Unified Faded Logo Background */
+        .panel-bg-logo {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url('logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40%;
+            background-attachment: fixed;
+            background-color: white;
         }
 
-        #downloadBtn {
-            display: none;
-            background-color: var(--primary-blue);
-            color: white;
-            width: 100%;
-            margin-top: 25px;
-            font-size: 16px;
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        /* Micro-Interactions: Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        #downloadBtn:hover { transform: translateY(-2px); background-color: #1d4ed8; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover lift for cards */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-10px); }
+
+        @media (max-width: 768px) {
+            .panel-bg-logo { background-size: 70%; }
+        }
     </style>
 </head>
-<body>
+<body class="bg-white text-slate-900">
 
-    <div class="container">
-        <img src="logo.png" alt="ImoTech" style="height: 40px; margin-bottom: 20px;" onerror="this.style.display='none'">
-        <h1>Smart QR Generator</h1>
-        <p>Generate secure, custom-branded QR codes instantly.</p>
-        
-        <input type="text" id="qrInput" placeholder="Enter URL or content" oninput="updateQRCode()">
-
-        <div class="controls-grid">
-            <div class="color-group">
-                <label>Foreground</label>
-                <input type="color" id="foregroundColor" value="#0f172a" onchange="updateQRCode()" style="width: 30px; height: 30px; border: none; background: none; cursor: pointer;">
+    <nav class="glass sticky top-0 z-40 border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="#" onclick="window.scrollTo(0,0); return false;" class="block">
+                    <img src="logo.png" alt="ImoTech Logo" class="h-10 md:h-12 w-auto">
+                </a>
             </div>
-            <div class="color-group">
-                <label>Background</label>
-                <input type="color" id="backgroundColor" value="#ffffff" onchange="updateQRCode()" style="width: 30px; height: 30px; border: none; background: none; cursor: pointer;">
+            
+            <div class="flex items-center">
+                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg text-sm md:text-base">
+                    Request Consultation
+                </button>
             </div>
         </div>
+    </nav>
 
-        <div style="text-align: left; margin-top: 20px;">
-            <label>Logo Overlay (Optional)</label>
-            <input type="file" id="imageInput" accept="image/*" onchange="updateQRCode()">
+    <header id="home" class="hero-gradient py-32 px-6 text-center border-b border-slate-100">
+        <div class="max-w-4xl mx-auto reveal">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight text-slate-900">
+                ImoTech Solutions. <br><span class="text-blue-600">Intelligent Systems.</span>
+            </h1>
+            <p class="text-xl text-slate-500 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+                We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
+            </p>
+            <div class="flex justify-center">
+                <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition text-lg shadow-lg">
+                    Our Services
+                </a>
+            </div>
         </div>
+    </header>
 
-        <div class="preset-buttons">
-            <button onclick="presetQR('https://')">Website</button>
-            <button onclick="presetQR('mailto:')">Email</button>
-            <button onclick="presetQR('https://wa.me/')">WhatsApp</button>
-            <button onclick="presetQR('https://linkedin.com/in/')">LinkedIn</button>
+    <section id="services" class="py-24 max-w-6xl mx-auto px-6 bg-white">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-3xl font-extrabold mb-4 text-slate-900">Our Core Capabilities</h2>
+            <p class="text-slate-500 max-w-xl mx-auto">Explore how our customized systems transform business operations.</p>
         </div>
-
-        <div id="qrcode"></div>
         
-        <button id="downloadBtn" onclick="downloadQRCode()">Download Asset</button>
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300">
+                <div class="text-5xl mb-6">📊</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Management</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Business Management Systems for full operational oversight.</p>
+                <button onclick="openPanel('panel-1')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+            </div>
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.1s;">
+                <div class="text-5xl mb-6">🤖</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Automation</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">AI & Automation Solutions to replace repetitive tasks.</p>
+                <button onclick="openPanel('panel-2')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+            </div>
+            <div class="reveal hover-lift bg-slate-50 p-10 rounded-3xl border border-slate-100 flex flex-col hover:shadow-2xl transition duration-300" style="transition-delay: 0.2s;">
+                <div class="text-5xl mb-6">🌐</div>
+                <h3 class="text-2xl font-extrabold mb-4 text-slate-900">Platforms</h3>
+                <p class="text-base text-slate-600 mb-8 flex-grow leading-relaxed">Web Platforms & Digital Tools that work for your business.</p>
+                <button onclick="openPanel('panel-3')" class="w-full py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 bg-white border-t border-slate-100 text-slate-400 text-center">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
+            <img src="logo.png" alt="ImoTech Logo" class="h-16 grayscale opacity-40 mb-2">
+            <p class="text-xs uppercase tracking-widest font-semibold">
+                &copy; 2026 ImoTech Solutions. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <div id="panel-contact" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-16">
+            <button onclick="closePanel('panel-contact')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2">← Back to Home</button>
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-slate-900">Request a Consultation</h2>
+            <div class="w-full bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900" frameborder="0">Loading…</iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-1" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
+            <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Business Management Systems</h2>
+            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
+                <p>
+                    We develop custom-built infrastructure designed to centralize and command your entire operation. 
+                    By integrating <strong>Internal Dashboards</strong> for high-level visibility and <strong>Workflow Management</strong> tools for daily task oversight, we ensure your team stays aligned. 
+                </p>
+                <p>
+                    Our systems facilitate seamless <strong>Staff and Process Coordination</strong> and provide robust <strong>Reporting and Performance Tracking</strong>, 
+                    allowing you to structure your business into a clear, controlled, and scalable system.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-2" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
+            <button onclick="closePanel('panel-2')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">AI & Automation Solutions</h2>
+            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
+                <p>
+                    Our team leverages artificial intelligence to drastically reduce manual workload and sharpen your decision-making. 
+                    Through <strong>Process Automation</strong> and <strong>Smart Data Handling</strong>, we eliminate administrative bottlenecks. 
+                </p>
+                <p>
+                    By implementing <strong>AI-Assisted Workflows</strong> and <strong>Automated Reporting</strong>, we help you replace repetitive, 
+                    low-value tasks with intelligent automation that provides deep business insights.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-3" class="service-panel panel-bg-logo fixed inset-0 z-[60] overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
+            <button onclick="closePanel('panel-3')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
+            <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Web Platforms & Digital Tools</h2>
+            <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
+                <p>
+                    We build high-performance functional platforms that serve as the backbone of your digital presence. 
+                    From sophisticated <strong>Client and Staff Portals</strong> to comprehensive <strong>Service Dashboards</strong>, 
+                    our focus is on utility rather than just aesthetics. 
+                </p>
+                <p>
+                    We create <strong>Integrated Digital Ecosystems</strong> that act as more than just a website—they are 
+                    functional business tools designed to support real activity and growth.
+                </p>
+            </div>
+        </div>
     </div>
 
     <script>
-        function updateQRCode() {
-            const qrInput = document.getElementById("qrInput").value;
-            const foregroundColor = document.getElementById("foregroundColor").value;
-            const backgroundColor = document.getElementById("backgroundColor").value;
-            const imageInput = document.getElementById("imageInput").files[0];
-            const qrCodeContainer = document.getElementById("qrcode");
-            const downloadBtn = document.getElementById("downloadBtn");
-
-            qrCodeContainer.innerHTML = "";
-            downloadBtn.style.display = "none";
-
-            if (qrInput.trim() !== "") {
-                QRCode.toCanvas(qrInput, { 
-                    errorCorrectionLevel: 'H', 
-                    width: 400,
-                    margin: 4,
-                    color: {
-                        dark: foregroundColor,
-                        light: backgroundColor
-                    }
-                }, function (err, canvas) {
-                    if (err) return;
-
-                    const ctx = canvas.getContext("2d");
-
-                    // Brand tag at the bottom
-                    ctx.font = "bold 14px Inter, Arial";
-                    ctx.fillStyle = foregroundColor;
-                    ctx.textAlign = "center";
-                    ctx.fillText("IMOTECH SOLUTIONS", canvas.width / 2, canvas.height - 8);
-
-                    qrCodeContainer.appendChild(canvas);
-
-                    if (imageInput) {
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                            const img = new Image();
-                            img.src = e.target.result;
-                            img.onload = function () {
-                                const imgSize = canvas.width / 5;
-                                // White circle background for logo
-                                ctx.fillStyle = backgroundColor;
-                                ctx.beginPath();
-                                ctx.arc(canvas.width/2, canvas.height/2, (imgSize/2) + 5, 0, Math.PI * 2);
-                                ctx.fill();
-                                // Draw logo
-                                ctx.drawImage(img, canvas.width / 2 - imgSize / 2, canvas.height / 2 - imgSize / 2, imgSize, imgSize);
-                            };
-                        };
-                        reader.readAsDataURL(imageInput);
-                    }
-
-                    downloadBtn.style.display = "block";
-                    downloadBtn.canvas = canvas;
-                });
+        // Smooth reveal logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
             }
         }
+        window.addEventListener("scroll", reveal);
+        reveal();
 
-        function downloadQRCode() {
-            const canvas = document.getElementById("downloadBtn").canvas;
-            if (canvas) {
-                const link = document.createElement("a");
-                link.href = canvas.toDataURL("image/png");
-                link.download = "ImoTech_SmartQR.png";
-                link.click();
-            }
+        function openPanel(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-
-        function presetQR(data) {
-            document.getElementById("qrInput").value = data;
-            document.getElementById("qrInput").focus();
-            updateQRCode();
+        function closePanel(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
