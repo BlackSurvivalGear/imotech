@@ -1,34 +1,316 @@
-<section class="py-24 bg-slate-900 text-white">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-4xl font-extrabold mb-4">How We Work</h2>
-                <p class="text-slate-400">Our 4-step roadmap to engineering your competitive advantage.</p>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImoTech | Professional Invoice Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --imo-blue: #2563eb;
+            --imo-slate: #0f172a;
+            --imo-border: #e2e8f0;
+        }
 
-            <div class="grid md:grid-cols-4 gap-12">
-                <div class="reveal relative">
-                    <div class="text-7xl font-black text-blue-400 opacity-40 absolute -top-12 -left-4 select-none">01</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Discovery</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed relative z-10">We audit your current tech stack and identify high-impact automation opportunities.</p>
-                </div>
-                
-                <div class="reveal relative" style="transition-delay: 0.1s;">
-                    <div class="text-7xl font-black text-blue-400 opacity-40 absolute -top-12 -left-4 select-none">02</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Architecture</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed relative z-10">Our engineers design a custom blueprint tailored to your specific operational logic.</p>
-                </div>
-                
-                <div class="reveal relative" style="transition-delay: 0.2s;">
-                    <div class="text-7xl font-black text-blue-400 opacity-40 absolute -top-12 -left-4 select-none">03</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Deployment</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed relative z-10">We build and integrate your system, ensuring seamless data flow and team onboarding.</p>
-                </div>
-                
-                <div class="reveal relative" style="transition-delay: 0.3s;">
-                    <div class="text-7xl font-black text-blue-400 opacity-40 absolute -top-12 -left-4 select-none">04</div>
-                    <h4 class="text-xl font-bold mb-3 relative z-10">Optimization</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed relative z-10">Continuous monitoring and AI fine-tuning to ensure your system scales with you.</p>
-                </div>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #f8fafc; 
+            padding: 40px 20px; 
+            color: var(--imo-slate); 
+        }
+
+        /* Branding Title Styling */
+        .brand-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 30px;
+        }
+        .title-split-1 { background: linear-gradient(to r, #0f172a, #334155); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .title-split-2 { background: linear-gradient(to r, #2563eb, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .app-container { 
+            max-width: 1200px; 
+            margin: auto; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 30px; 
+        }
+
+        .editor-section, .preview-section {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--imo-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.5px; }
+
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 20px; 
+            border-radius: 10px; 
+            border: 1px solid var(--imo-border); 
+            background: #fcfdfe;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        input:focus { outline: none; border-color: var(--imo-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+        /* BALANCED ITEM ROW */
+        .item-row { 
+            display: grid; 
+            grid-template-columns: 3fr 70px 110px 90px 40px; 
+            gap: 10px; 
+            align-items: center; 
+            margin-bottom: 10px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .item-row input { margin-bottom: 0 !important; padding: 8px 10px !important; font-size: 13px !important; }
+        .item-row input[type="number"] { text-align: center; }
+
+        .btn {
+            background: var(--imo-slate); color: #fff; padding: 14px 24px; border: none; border-radius: 12px;
+            cursor: pointer; font-weight: 600; transition: all 0.2s; text-align: center; display: block; width: 100%;
+        }
+
+        .btn:hover { background: #1e293b; transform: translateY(-1px); }
+        .btn-blue { background: var(--imo-blue); }
+        .btn-blue:hover { background: #1d4ed8; }
+
+        .remove-btn { background: #fee2e2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+        /* Invoice Paper (Preview) */
+        #invoicePaper { 
+            background: white; 
+            padding: 50px; 
+            color: #000; 
+            min-height: 800px;
+            border: 1px solid #eee;
+        }
+
+        .invoice-header { display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .invoice-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        .invoice-table th { background: #f8fafc; border-bottom: 2px solid #000; padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; }
+        .invoice-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+
+        .signature-line { margin-top: 60px; border-top: 1px solid #000; width: 200px; padding-top: 10px; font-size: 13px; }
+        .footer-logo { text-align: center; color: #94a3b8; margin-top: 50px; font-weight: 800; letter-spacing: 2px; font-size: 12px; }
+
+        @media (min-width: 1024px) {
+            .app-container { grid-template-columns: 500px 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="brand-title">
+    <span class="title-split-1">ImoTech</span> <span class="title-split-2">Invoice</span>
+</div>
+
+<div class="app-container">
+    <div class="editor-section">
+        <label>Company Branding</label>
+        <input type="text" id="businessName" placeholder="ImoTech Solutions" oninput="liveUpdate()">
+        
+        <label>Upload Logo</label>
+        <input type="file" id="logoUpload" accept="image/*">
+
+        <label>Billing To</label>
+        <input type="text" id="clientName" placeholder="Client or Company Name" oninput="liveUpdate()">
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div>
+                <label>Invoice Number</label>
+                <input type="text" id="invoiceNumber" oninput="liveUpdate()">
+            </div>
+            <div>
+                <label>Currency</label>
+                <select id="currency" onchange="liveUpdate()">
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="NGN">NGN (₦)</option>
+                    <option value="ZAR">ZAR (R)</option>
+                </select>
             </div>
         </div>
-    </section>
+
+        <div style="display: grid; grid-template-columns: 3fr 70px 110px 90px 40px; gap: 10px; padding: 0 12px;">
+            <label>Description</label>
+            <label style="text-align: center;">Qty</label>
+            <label>Price</label>
+            <label>Total</label>
+            <span></span>
+        </div>
+
+        <div id="itemsContainer">
+            <div class="item-row">
+                <input type="text" class="desc" placeholder="Engineering Service" oninput="liveUpdate()">
+                <input type="number" class="qty" value="1" oninput="liveUpdate()">
+                <input type="number" class="price" value="0" step="0.01" oninput="liveUpdate()">
+                <span class="rowTotal" style="font-size: 12px; font-weight: 700; color: var(--imo-blue); text-align: right;">0.00</span>
+                <button class="remove-btn" onclick="this.parentElement.remove(); liveUpdate()">✕</button>
+            </div>
+        </div>
+
+        <button class="btn" onclick="addNewItem()" style="background: #f1f5f9; color: var(--imo-slate); margin-top: 10px; font-size: 13px;">+ Add Service Line</button>
+        
+        <div style="margin-top: 40px;">
+            <button class="btn btn-blue" onclick="downloadPDF()">Generate & Download PDF</button>
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <div id="invoicePaper">
+            <div class="invoice-header">
+                <div>
+                    <img id="renderLogo" style="max-height: 55px; display: none; margin-bottom: 20px;">
+                    <h2 id="renderBusiness" style="margin:0; font-weight: 800; text-transform: uppercase; font-size: 1.4rem;"></h2>
+                </div>
+                <div style="text-align: right;">
+                    <h1 style="margin:0; color:#f1f5f9; font-size: 45px; letter-spacing: 2px; font-weight: 900;">INVOICE</h1>
+                    <p style="margin:5px 0; font-size: 13px;"><strong>REF:</strong> <span id="renderNumber"></span></p>
+                    <p style="margin:5px 0; font-size: 13px;"><strong>DATE:</strong> <span id="renderDate"></span></p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 40px;">
+                <label style="color: #94a3b8; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;">Bill To</label>
+                <h3 id="renderClient" style="margin:0; font-size: 1.1rem; font-weight: 700;"></h3>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Service Description</th>
+                        <th style="width: 50px; text-align: center;">Qty</th>
+                        <th style="width: 100px; text-align: right;">Rate</th>
+                        <th style="width: 100px; text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="renderItems"></tbody>
+            </table>
+
+            <div style="text-align: right; margin-top: 30px;">
+                <p style="font-size: 12px; color: #64748b; margin-bottom: 5px; font-weight: 600; text-transform: uppercase;">Total Balance Due</p>
+                <h2 id="renderTotal" style="margin:0; font-size: 2.4rem; font-weight: 800; color: var(--imo-slate);"></h2>
+            </div>
+
+            <div class="signature-line">Authorized Signature</div>
+
+            <p style="margin-top: 80px; font-size: 11px; color: #cbd5e1; text-align: center; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">
+                Solutions Engineered by ImoTech
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="footer-logo">IMOTECH SOLUTIONS</div>
+
+<script>
+let logoBase64 = '';
+
+// Generate Initial Data
+document.getElementById('invoiceNumber').value = 'ITS-' + Math.floor(Math.random() * 90000 + 10000);
+document.getElementById('renderDate').textContent = new Date().toLocaleDateString('en-GB');
+
+// Logo Handling
+document.getElementById('logoUpload').addEventListener('change', function(e){
+    const reader = new FileReader();
+    reader.onload = function(){
+        logoBase64 = reader.result;
+        const img = document.getElementById('renderLogo');
+        img.src = logoBase64;
+        img.style.display = 'block';
+        liveUpdate();
+    };
+    reader.readAsDataURL(e.target.files[0]);
+});
+
+function addNewItem() {
+    const container = document.getElementById('itemsContainer');
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `
+        <input type="text" class="desc" placeholder="Engineering Service" oninput="liveUpdate()">
+        <input type="number" class="qty" value="1" oninput="liveUpdate()">
+        <input type="number" class="price" value="0" step="0.01" oninput="liveUpdate()">
+        <span class="rowTotal" style="font-size: 12px; font-weight: 700; color: var(--imo-blue); text-align: right;">0.00</span>
+        <button class="remove-btn" onclick="this.parentElement.remove(); liveUpdate()">✕</button>
+    `;
+    container.appendChild(div);
+}
+
+function liveUpdate() {
+    document.getElementById('renderBusiness').textContent = document.getElementById('businessName').value || 'IMOTECH SOLUTIONS';
+    document.getElementById('renderClient').textContent = document.getElementById('clientName').value || 'ATTN: VALUED CLIENT';
+    document.getElementById('renderNumber').textContent = document.getElementById('invoiceNumber').value;
+    
+    const currency = document.getElementById('currency').value;
+    const items = document.querySelectorAll('.item-row');
+    const renderTable = document.getElementById('renderItems');
+    renderTable.innerHTML = '';
+    
+    let grandTotal = 0;
+
+    items.forEach(item => {
+        const desc = item.querySelector('.desc').value || 'Standard Service';
+        const qty = parseFloat(item.querySelector('.qty').value) || 0;
+        const price = parseFloat(item.querySelector('.price').value) || 0;
+        const total = qty * price;
+        grandTotal += total;
+
+        item.querySelector('.rowTotal').textContent = total.toFixed(2);
+
+        const tr = `<tr>
+            <td style="font-weight: 500; color: #1e293b;">${desc}</td>
+            <td style="text-align: center;">${qty}</td>
+            <td style="text-align: right;">${price.toFixed(2)}</td>
+            <td style="text-align: right; font-weight: 700;">${total.toFixed(2)}</td>
+        </tr>`;
+        renderTable.innerHTML += tr;
+    });
+
+    document.getElementById('renderTotal').textContent = `${currency} ${grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+}
+
+function downloadPDF() {
+    const element = document.getElementById('invoicePaper');
+    const invNum = document.getElementById('invoiceNumber').value;
+    
+    const opt = {
+        margin: 0,
+        filename: `Invoice_${invNum}.pdf`,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2canvas(element, opt.html2canvas).then(canvas => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(opt.filename);
+    });
+}
+
+// Kickoff
+liveUpdate();
+</script>
+</body>
+</html>
