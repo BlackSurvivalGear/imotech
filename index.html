@@ -13,6 +13,15 @@
         .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
         .service-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .service-panel.active { transform: translateX(0); }
+        
+        /* Specialized background for Panel 1 */
+        .panel-bg-logo {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50%;
+            background-attachment: fixed;
+        }
     </style>
 </head>
 <body class="bg-white text-slate-900">
@@ -96,8 +105,8 @@
         </div>
     </div>
 
-    <div id="panel-1" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 md:p-20">
+    <div id="panel-1" class="service-panel panel-bg-logo fixed inset-0 z-[60] bg-white overflow-y-auto">
+        <div class="max-w-4xl mx-auto p-8 md:p-20 relative z-10">
             <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Business Management Systems</h2>
             <div class="space-y-6 text-lg text-slate-600">
