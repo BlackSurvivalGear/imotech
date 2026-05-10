@@ -50,19 +50,15 @@
 
     <nav class="glass sticky top-0 z-40 border-b border-slate-100">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="w-1/3 flex justify-start gap-6 items-center">
-                <a href="#services" class="font-bold text-[10px] uppercase tracking-[0.3em] text-slate-400 hover:text-blue-600 transition">Services</a>
-            </div>
-            
-            <div class="w-1/3 flex justify-center h-full py-2">
-                <a href="#" onclick="window.scrollTo(0,0); return false;" class="h-full">
-                    <img src="logo.png" alt="ImoTech Logo" class="h-14 w-auto">
+            <div class="flex items-center">
+                <a href="#" onclick="window.scrollTo(0,0); return false;" class="block">
+                    <img src="logo.png" alt="ImoTech Logo" class="h-10 md:h-12 w-auto">
                 </a>
             </div>
             
-            <div class="w-1/3 flex justify-end">
-                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition shadow-md text-sm">
-                    Consultation
+            <div class="flex items-center">
+                <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg text-sm md:text-base">
+                    Request Consultation
                 </button>
             </div>
         </div>
@@ -76,9 +72,9 @@
             <p class="text-xl text-slate-500 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
                 We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
+            <div class="flex justify-center">
                 <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition text-lg shadow-lg">
-                    View Services
+                    Our Services
                 </a>
             </div>
         </div>
@@ -124,7 +120,7 @@
     <div id="panel-contact" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
         <div class="max-w-4xl mx-auto p-8 md:p-16">
             <button onclick="closePanel('panel-contact')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2">← Back to Home</button>
-            <h2 class="text-4xl font-extrabold mb-10 text-center">Request a Consultation</h2>
+            <h2 class="text-4xl font-extrabold mb-10 text-center text-slate-900">Request a Consultation</h2>
             <div class="w-full bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900" frameborder="0">Loading…</iframe>
             </div>
@@ -191,7 +187,6 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        // Initial check on load
         reveal();
 
         function openPanel(id) {
