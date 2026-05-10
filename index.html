@@ -12,50 +12,37 @@
         .glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(8px); }
         .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
         
-        /* Panel Transitions */
-        .service-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .service-panel { 
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
         .service-panel.active { transform: translateX(0); }
         
-        /* Unified Faded Logo Background */
         .panel-bg-logo {
             background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url('logo.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 40%;
-            background-attachment: fixed;
-            background-color: white;
+            background-repeat: no-repeat; background-position: center; background-size: 40%;
+            background-attachment: fixed; background-color: white;
         }
 
-        /* Micro-Interactions: Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Hover lift for cards */
         .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .hover-lift:hover { transform: translateY(-10px); }
 
-        @media (max-width: 768px) {
-            .panel-bg-logo { background-size: 70%; }
-        }
+        @media (max-width: 768px) { .panel-bg-logo { background-size: 70%; } }
     </style>
 </head>
 <body class="bg-white text-slate-900">
 
     <nav class="glass sticky top-0 z-40 border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-6 h-24 flex items-center justify-between">
             <div class="flex items-center">
                 <a href="#" onclick="window.scrollTo(0,0); return false;" class="block">
-                    <img src="logo.png" alt="ImoTech Logo" class="h-10 md:h-12 w-auto">
+                    <img src="logo.png" alt="ImoTech Logo" class="h-14 md:h-16 w-auto">
                 </a>
             </div>
-            
             <div class="flex items-center">
                 <button onclick="openPanel('panel-contact')" class="bg-blue-600 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg text-sm md:text-base">
                     Request Consultation
@@ -72,7 +59,7 @@
             <p class="text-xl text-slate-500 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
                 We design and deploy AI-driven software that improves efficiency, automates processes, and gives you full operational control.
             </p>
-            <div class="flex justify-center">
+            <div class="flex justify-center gap-4">
                 <a href="#services" class="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition text-lg shadow-lg">
                     Our Services
                 </a>
@@ -108,9 +95,41 @@
         </div>
     </section>
 
+    <section class="py-24 bg-slate-900 text-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl font-extrabold mb-4">How We Work</h2>
+                <p class="text-slate-400">Our 4-step roadmap to engineering your competitive advantage.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-12">
+                <div class="reveal relative">
+                    <div class="text-6xl font-black text-blue-600 opacity-20 absolute -top-10 -left-4">01</div>
+                    <h4 class="text-xl font-bold mb-3 relative z-10">Discovery</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">We audit your current tech stack and identify high-impact automation opportunities.</p>
+                </div>
+                <div class="reveal relative" style="transition-delay: 0.1s;">
+                    <div class="text-6xl font-black text-blue-600 opacity-20 absolute -top-10 -left-4">02</div>
+                    <h4 class="text-xl font-bold mb-3 relative z-10">Architecture</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Our engineers design a custom blueprint tailored to your specific operational logic.</p>
+                </div>
+                <div class="reveal relative" style="transition-delay: 0.2s;">
+                    <div class="text-6xl font-black text-blue-600 opacity-20 absolute -top-10 -left-4">03</div>
+                    <h4 class="text-xl font-bold mb-3 relative z-10">Deployment</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">We build and integrate your system, ensuring seamless data flow and team onboarding.</p>
+                </div>
+                <div class="reveal relative" style="transition-delay: 0.3s;">
+                    <div class="text-6xl font-black text-blue-600 opacity-20 absolute -top-10 -left-4">04</div>
+                    <h4 class="text-xl font-bold mb-3 relative z-10">Optimization</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Continuous monitoring and AI fine-tuning to ensure your system scales with you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="py-20 bg-white border-t border-slate-100 text-slate-400 text-center">
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
-            <img src="logo.png" alt="ImoTech Logo" class="h-16 grayscale opacity-40 mb-2">
+            <img src="logo.png" alt="ImoTech Logo" class="h-20 grayscale opacity-40 mb-2">
             <p class="text-xs uppercase tracking-widest font-semibold">
                 &copy; 2026 ImoTech Solutions. All rights reserved.
             </p>
@@ -120,6 +139,15 @@
     <div id="panel-contact" class="service-panel fixed inset-0 z-[60] bg-white overflow-y-auto">
         <div class="max-w-4xl mx-auto p-8 md:p-16">
             <button onclick="closePanel('panel-contact')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2">← Back to Home</button>
+            
+            <div class="bg-blue-50 border border-blue-100 rounded-3xl p-8 mb-12 flex flex-col md:flex-row items-center gap-8">
+                <div class="text-4xl">📋</div>
+                <div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-1">Free Automation Audit Checklist</h3>
+                    <p class="text-blue-700 text-sm">Not sure where to start? Request a consultation below and we'll include our "High-Impact Automation" audit checklist for free.</p>
+                </div>
+            </div>
+
             <h2 class="text-4xl font-extrabold mb-10 text-center text-slate-900">Request a Consultation</h2>
             <div class="w-full bg-slate-50 rounded-3xl overflow-hidden border border-slate-200">
                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="900" frameborder="0">Loading…</iframe>
@@ -132,14 +160,8 @@
             <button onclick="closePanel('panel-1')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Business Management Systems</h2>
             <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>
-                    We develop custom-built infrastructure designed to centralize and command your entire operation. 
-                    By integrating <strong>Internal Dashboards</strong> for high-level visibility and <strong>Workflow Management</strong> tools for daily task oversight, we ensure your team stays aligned. 
-                </p>
-                <p>
-                    Our systems facilitate seamless <strong>Staff and Process Coordination</strong> and provide robust <strong>Reporting and Performance Tracking</strong>, 
-                    allowing you to structure your business into a clear, controlled, and scalable system.
-                </p>
+                <p>We develop custom-built infrastructure designed to centralize and command your entire operation. By integrating <strong>Internal Dashboards</strong> for high-level visibility and <strong>Workflow Management</strong> tools for daily task oversight, we ensure your team stays aligned.</p>
+                <p>Our systems facilitate seamless <strong>Staff Coordination</strong> and provide robust <strong>Performance Reporting</strong>, allowing you to structure your business into a clear, controlled, and scalable system.</p>
             </div>
         </div>
     </div>
@@ -149,14 +171,8 @@
             <button onclick="closePanel('panel-2')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">AI & Automation Solutions</h2>
             <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>
-                    Our team leverages artificial intelligence to drastically reduce manual workload and sharpen your decision-making. 
-                    Through <strong>Process Automation</strong> and <strong>Smart Data Handling</strong>, we eliminate administrative bottlenecks. 
-                </p>
-                <p>
-                    By implementing <strong>AI-Assisted Workflows</strong> and <strong>Automated Reporting</strong>, we help you replace repetitive, 
-                    low-value tasks with intelligent automation that provides deep business insights.
-                </p>
+                <p>Our team leverages artificial intelligence to drastically reduce manual workload and sharpen your decision-making. Through <strong>Process Automation</strong> and <strong>Smart Data Handling</strong>, we eliminate administrative bottlenecks.</p>
+                <p>By implementing <strong>AI-Assisted Workflows</strong> and <strong>Automated Insights</strong>, we help you replace repetitive, low-value tasks with intelligent systems that work around the clock.</p>
             </div>
         </div>
     </div>
@@ -166,28 +182,19 @@
             <button onclick="closePanel('panel-3')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs">← Back to Home</button>
             <h2 class="text-5xl font-extrabold mb-8 text-slate-900 tracking-tight">Web Platforms & Digital Tools</h2>
             <div class="space-y-6 text-lg text-slate-600 leading-relaxed">
-                <p>
-                    We build high-performance functional platforms that serve as the backbone of your digital presence. 
-                    From sophisticated <strong>Client and Staff Portals</strong> to comprehensive <strong>Service Dashboards</strong>, 
-                    our focus is on utility rather than just aesthetics. 
-                </p>
-                <p>
-                    We create <strong>Integrated Digital Ecosystems</strong> that act as more than just a website—they are 
-                    functional business tools designed to support real activity and growth.
-                </p>
+                <p>We build high-performance functional platforms that serve as the backbone of your digital presence. From sophisticated <strong>Client and Staff Portals</strong> to comprehensive <strong>Service Dashboards</strong>, our focus is on utility rather than just aesthetics.</p>
+                <p>We create <strong>Integrated Digital Ecosystems</strong> that act as more than just a website—they are hardworking business tools designed to drive activity and results.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Smooth reveal logic
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 150) {
                     reveals[i].classList.add("active");
                 }
             }
@@ -196,7 +203,9 @@
         reveal();
 
         function openPanel(id) {
-            document.getElementById(id).classList.add('active');
+            const p = document.getElementById(id);
+            p.scrollTop = 0;
+            p.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
         function closePanel(id) {
