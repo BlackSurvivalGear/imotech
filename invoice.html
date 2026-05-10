@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator — ImoTech</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+body { font-family:'Inter',sans-serif; }
+@media print { .no-print{display:none!important;} }
+</style>
+</head>
+<body class="bg-white text-slate-900 p-6">
+
+<h2 class="text-2xl font-extrabold mb-6 no-print">Freelance Invoice Generator</h2>
+
+<!-- FORM -->
+<div class="no-print grid md:grid-cols-2 gap-6 mb-8">
+
+<fieldset class="border border-slate-200 rounded-2xl p-6 space-y-3">
+<legend class="text-sm font-bold text-slate-500 px-2">Your Details</legend>
+<input id="from-name" placeholder="Your Name / Company" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<input id="from-email" placeholder="Email" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<textarea id="from-address" rows="2" placeholder="Address" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+</fieldset>
+
+<fieldset class="border border-slate-200 rounded-2xl p-6 space-y-3">
+<legend class="text-sm font-bold text-slate-500 px-2">Client Details</legend>
+<input id="to-name" placeholder="Client Name / Company" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<input id="to-email" placeholder="Client Email" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<textarea id="to-address" rows="2" placeholder="Client Address" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+</fieldset>
+
+<fieldset class="border border-slate-200 rounded-2xl p-6 space-y-3">
+<legend class="text-sm font-bold text-slate-500 px-2">Invoice Info</legend>
+<div class="grid grid-cols-2 gap-3">
+<input id="inv-number" placeholder="Invoice #" class="border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<input id="inv-date" type="date" class="border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+</div>
+<input id="inv-due" type="date" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Due Date">
+<select id="inv-currency" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600">
+<option value="$">USD ($)</option>
+<option value="£" selected>GBP (£)</option>
+<option value="€">EUR (€)</option>
+<option value="₦">NGN (₦)</option>
+<option value="¥">JPY (¥)</option>
+<option value="C$">CAD (C$)</option>
+<option value="A$">AUD (A$)</option>
+</select>
+<textarea id="inv-notes" rows="2" placeholder="Notes / Payment terms (optional)" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+</fieldset>
+
+<fieldset class="border border-slate-200 rounded-2xl p-6">
+<legend class="text-sm font-bold text-slate-500 px-2">Line Items</legend>
+<div id="line-items" class="space-y-3"></div>
+<button onclick="addLineItem()" class="mt-3 text-blue-600 font-bold text-sm">+ Add Line Item</button>
+</fieldset>
+
+</div>
+
+<div class="no-print flex gap-3 mb-10 flex-wrap">
+<button onclick="renderInvoice()" class="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition">Preview Invoice</button>
+<button onclick="downloadPDF()" id="btn-pdf" style="display:none" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition">Download PDF</button>
+</div>
+
+<!-- PREVIEW -->
+<div id="invoice-preview"></div>
+
+<script>
+let lineCount = 0;
+
+function addLineItem() {
+  lineCount++;
+  const row = document.createElement('div');
+  row.className = 'grid grid-cols-12 gap-2 items-center';
+  row.innerHTML = `
+    <input placeholder="Description" class="col-span-5 border border-slate-300 rounded-xl px-3 py-2 text-sm line-desc focus:outline-none focus:ring-2 focus:ring-blue-600">
+    <input type="number" placeholder="Qty" min="0" step="1" class="col-span-2 border border-slate-300 rounded-xl px-3 py-2 text-sm line-qty focus:outline-none focus:ring-2 focus:ring-blue-600">
+    <input type="number" placeholder="Rate" min="0" step="0.01" class="col-span-3 border border-slate-300 rounded-xl px-3 py-2 text-sm line-rate focus:outline-none focus:ring-2 focus:ring-blue-600">
+    <button onclick="this.parentElement.remove()" class="col-span-2 text-red-500 text-sm font-bold">Remove</button>
+  `;
+  document.getElementById('line-items').appendChild(row);
+}
+
+function getCurrency() { return document.getElementById('inv-currency').value; }
+
+function renderInvoice() {
+  const cur = getCurrency();
+  const fromName = document.getElementById('from-name').value || 'Your Name';
+  const fromEmail = document.getElementById('from-email').value;
+  const fromAddr = document.getElementById('from-address').value;
+  const toName = document.getElementById('to-name').value || 'Client Name';
+  const toEmail = document.getElementById('to-email').value;
+  const toAddr = document.getElementById('to-address').value;
+  const invNum = document.getElementById('inv-number').value || '001';
+  const invDate = document.getElementById('inv-date').value || new Date().toISOString().slice(0,10);
+  const invDue = document.getElementById('inv-due').value || '';
+  const notes = document.getElementById('inv-notes').value;
+
+  const rows = document.querySelectorAll('#line-items > div');
+  let items = [];
+  let subtotal = 0;
+  rows.forEach(r => {
+    const desc = r.querySelector('.line-desc').value || 'Item';
+    const qty = parseFloat(r.querySelector('.line-qty').value) || 0;
+    const rate = parseFloat(r.querySelector('.line-rate').value) || 0;
+    const amount = qty * rate;
+    subtotal += amount;
+    items.push({ desc, qty, rate, amount });
+  });
+
+  const nl = (s) => s.replace(/\n/g, '<br>');
+
+  let html = `
+  <div id="inv-pdf-target" style="font-family:Inter,sans-serif;max-width:800px;margin:auto;padding:40px;border:1px solid #e2e8f0;border-radius:16px;background:#fff;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;">
+      <div>
+        <h1 style="font-size:28px;font-weight:800;color:#0f172a;margin:0 0 4px 0;">INVOICE</h1>
+        <p style="color:#64748b;font-size:14px;margin:0;">#${invNum}</p>
+      </div>
+      <div style="text-align:right;">
+        <p style="font-weight:700;color:#0f172a;margin:0;">${fromName}</p>
+        ${fromEmail ? '<p style="color:#64748b;font-size:13px;margin:2px 0;">'+fromEmail+'</p>' : ''}
+        ${fromAddr ? '<p style="color:#64748b;font-size:13px;margin:2px 0;">'+nl(fromAddr)+'</p>' : ''}
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-bottom:32px;">
+      <div>
+        <p style="font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;margin:0 0 4px 0;">Bill To</p>
+        <p style="font-weight:700;color:#0f172a;margin:0;">${toName}</p>
+        ${toEmail ? '<p style="color:#64748b;font-size:13px;margin:2px 0;">'+toEmail+'</p>' : ''}
+        ${toAddr ? '<p style="color:#64748b;font-size:13px;margin:2px 0;">'+nl(toAddr)+'</p>' : ''}
+      </div>
+      <div style="text-align:right;">
+        <p style="font-size:13px;color:#64748b;margin:2px 0;"><strong>Date:</strong> ${invDate}</p>
+        ${invDue ? '<p style="font-size:13px;color:#64748b;margin:2px 0;"><strong>Due:</strong> '+invDue+'</p>' : ''}
+      </div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+      <thead>
+        <tr style="background:#f8fafc;">
+          <th style="text-align:left;padding:12px;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:2px solid #e2e8f0;">Description</th>
+          <th style="text-align:center;padding:12px;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:2px solid #e2e8f0;">Qty</th>
+          <th style="text-align:right;padding:12px;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:2px solid #e2e8f0;">Rate</th>
+          <th style="text-align:right;padding:12px;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:2px solid #e2e8f0;">Amount</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  items.forEach(item => {
+    html += `
+        <tr>
+          <td style="padding:12px;border-bottom:1px solid #f1f5f9;">${item.desc}</td>
+          <td style="padding:12px;text-align:center;border-bottom:1px solid #f1f5f9;">${item.qty}</td>
+          <td style="padding:12px;text-align:right;border-bottom:1px solid #f1f5f9;">${cur}${item.rate.toFixed(2)}</td>
+          <td style="padding:12px;text-align:right;border-bottom:1px solid #f1f5f9;font-weight:600;">${cur}${item.amount.toFixed(2)}</td>
+        </tr>`;
+  });
+
+  html += `
+      </tbody>
+    </table>
+
+    <div style="display:flex;justify-content:flex-end;margin-bottom:24px;">
+      <div style="width:250px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="color:#64748b;">Subtotal</span>
+          <span style="font-weight:600;">${cur}${subtotal.toFixed(2)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:18px;">
+          <span style="font-weight:800;color:#0f172a;">Total</span>
+          <span style="font-weight:800;color:#2563eb;">${cur}${subtotal.toFixed(2)}</span>
+        </div>
+      </div>
+    </div>
+
+    ${notes ? '<div style="background:#f8fafc;border-radius:12px;padding:16px;"><p style="font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;margin:0 0 4px 0;">Notes</p><p style="color:#64748b;font-size:13px;margin:0;">'+nl(notes)+'</p></div>' : ''}
+  </div>`;
+
+  document.getElementById('invoice-preview').innerHTML = html;
+  document.getElementById('btn-pdf').style.display = 'inline-block';
+}
+
+function downloadPDF() {
+  const el = document.getElementById('inv-pdf-target');
+  if (!el) return;
+  const opt = {
+    margin: 0.5,
+    filename: 'invoice.pdf',
+    image: { type:'jpeg', quality:0.98 },
+    html2canvas: { scale:2 },
+    jsPDF: { unit:'in', format:'a4', orientation:'portrait' }
+  };
+  html2pdf().set(opt).from(el).save();
+}
+
+// init
+addLineItem();
+document.getElementById('inv-date').valueAsDate = new Date();
+</script>
+</body>
+</html>
