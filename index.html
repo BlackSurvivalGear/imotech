@@ -1,355 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImoTech | Smart QR & Roadmap</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-blue: #2563eb;
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-400: #94a3b8;
-            --slate-500: #64748b;
-            --slate-900: #0f172a;
-            --hero-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--hero-gradient);
-            color: var(--slate-900);
-            line-height: 1.6;
-        }
-
-        .main-wrapper {
-            max-width: 1000px;
-            margin: 80px auto;
-            padding: 0 24px;
-        }
-
-        /* HEADER BRANDING */
-        .brand-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .brand-logo {
-            font-weight: 800;
-            font-size: 24px;
-            letter-spacing: -0.05em;
-            color: var(--slate-900);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        /* QR TOOL CONTAINER */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            padding: 60px 40px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--slate-900);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 100px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 20px;
-        }
-
-        h1 { font-weight: 800; font-size: 2.8rem; letter-spacing: -0.04em; margin: 0 0 12px 0; }
-        .subtitle { color: var(--slate-500); font-size: 18px; margin-bottom: 40px; font-weight: 300; }
-
-        /* INPUTS & CONTROLS */
-        .input-group {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 20px 28px;
-            border-radius: 20px;
-            border: 1px solid var(--slate-200);
-            font-size: 16px;
-            background: white;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.1);
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
-        }
-
-        .control-item {
-            background: white;
-            padding: 12px 20px;
-            border-radius: 16px;
-            border: 1px solid var(--slate-200);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .control-item label { font-size: 11px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; }
-
-        /* PRESETS */
-        .presets {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 32px;
-        }
-
-        .presets button {
-            background: transparent;
-            border: 1px solid var(--slate-200);
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--slate-500);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .presets button:hover {
-            background: var(--slate-900);
-            color: white;
-            border-color: var(--slate-900);
-        }
-
-        /* QR CANVAS */
-        #qrcode canvas {
-            border-radius: 32px;
-            background: white;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-            border: 8px solid white;
-            margin: 20px 0;
-            max-width: 100%;
-        }
-
-        #downloadBtn {
-            display: none;
-            width: 100%;
-            max-width: 300px;
-            margin: 20px auto 0;
-            padding: 18px;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 18px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
-        }
-
-        #downloadBtn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
-        }
-
-        /* ROADMAP SECTION */
-        .roadmap-header { margin-bottom: 40px; text-align: center; }
+<div id="panel-tool-qr" class="service-panel fixed inset-0 z-[70] bg-white overflow-y-auto">
+    <div class="max-w-xl mx-auto p-8 md:p-20 text-center relative z-10">
+        <button onclick="closePanel('panel-tool-qr')" class="mb-12 text-blue-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2 mx-auto">
+            <span>←</span> Back to Home
+        </button>
         
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
-        }
-
-        .step-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 32px;
-            border: 1px solid var(--slate-200);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .step-card:hover { transform: translateY(-5px); }
-
-        .step-count {
-            font-size: 48px;
-            font-weight: 800;
-            color: var(--slate-100);
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            line-height: 1;
-        }
-
-        .step-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 0 0 12px 0;
-            color: var(--slate-900);
-            position: relative;
-        }
-
-        .step-card p {
-            font-size: 14px;
-            color: var(--slate-500);
-            margin: 0;
-            line-height: 1.6;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="main-wrapper">
-        <header class="brand-header">
-            <span class="brand-logo">ImoTech Solutions</span>
-        </header>
-
-        <section class="glass-panel">
-            <div class="badge">Asset Engine v2.0</div>
-            <h1>Smart QR Generator</h1>
-            <p class="subtitle">Deploy custom data access points in seconds.</p>
-
-            <div class="input-group">
-                <input type="text" id="qrInput" placeholder="Enter URL, Message, or Endpoint..." oninput="generateQR()">
-                
-                <div class="controls">
-                    <div class="control-item">
-                        <label>Foreground</label>
-                        <input type="color" id="fgColor" value="#0f172a" onchange="generateQR()" style="border:none; width:28px; height:28px; background:none; cursor:pointer;">
-                    </div>
-                    <div class="control-item">
-                        <label>Background</label>
-                        <input type="color" id="bgColor" value="#ffffff" onchange="generateQR()" style="border:none; width:28px; height:28px; background:none; cursor:pointer;">
-                    </div>
-                </div>
-
-                <div class="presets">
-                    <button onclick="applyPreset('https://')">Website</button>
-                    <button onclick="applyPreset('mailto:')">Email Link</button>
-                    <button onclick="applyPreset('https://wa.me/')">WhatsApp</button>
-                    <button onclick="applyPreset('https://linkedin.com/company/')">LinkedIn</button>
-                </div>
-            </div>
-
-            <div id="qrcode"></div>
-            <button id="downloadBtn" onclick="downloadAsset()">Download Asset</button>
-        </section>
-
-        <section class="roadmap-container">
-            <div class="roadmap-header">
-                <div class="badge" style="background: var(--primary-blue);">Our Method</div>
-                <h2 style="font-size: 2.2rem; font-weight: 800; margin: 10px 0;">Engineering Roadmap</h2>
-            </div>
+        <div class="inline-block bg-blue-50 text-blue-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+            Utility Tool
+        </div>
+        
+        <h2 class="text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Smart QR Generator</h2>
+        <p class="text-slate-500 mb-10 font-light">Create clean, high-performance assets for your business infrastructure.</p>
+        
+        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 shadow-inner mb-8">
+            <label class="block text-left text-xs font-bold text-slate-400 uppercase mb-2 ml-2">Endpoint URL or Data</label>
+            <input type="text" id="qrInput" placeholder="https://your-system.com/access" 
+                class="w-full p-4 rounded-2xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition mb-6 text-slate-900" 
+                oninput="updateQRCode()">
             
-            <div class="roadmap-grid">
-                <div class="step-card">
-                    <div class="step-count">01</div>
-                    <h3>Discovery</h3>
-                    <p>Deep audit of technical infrastructure and automation bottlenecks.</p>
+            <div id="qrcode" class="bg-white p-6 rounded-3xl inline-block shadow-xl border border-white mb-6">
                 </div>
-                <div class="step-card">
-                    <div class="step-count">02</div>
-                    <h3>Architecture</h3>
-                    <p>Designing custom logic flows and secure data pipelines.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-count">03</div>
-                    <h3>Deployment</h3>
-                    <p>System integration with comprehensive team onboarding.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-count">04</div>
-                    <h3>Evolution</h3>
-                    <p>24/7 AI-driven monitoring and continuous performance scaling.</p>
-                </div>
+            
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="presetQR('https://')" class="bg-white border border-slate-200 py-3 rounded-xl font-semibold text-slate-600 hover:bg-slate-900 hover:text-white transition">Website</button>
+                <button onclick="presetQR('https://wa.me/')" class="bg-white border border-slate-200 py-3 rounded-xl font-semibold text-slate-600 hover:bg-slate-900 hover:text-white transition">WhatsApp</button>
             </div>
-        </section>
+        </div>
+        
+        <button id="downloadBtn" onclick="downloadQRCode()" 
+            class="hidden w-full py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition transform hover:-translate-y-1">
+            Download Custom Asset
+        </button>
     </div>
-
-    <script>
-        const qrContainer = document.getElementById('qrcode');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        function generateQR() {
-            const input = document.getElementById('qrInput').value;
-            const fg = document.getElementById('fgColor').value;
-            const bg = document.getElementById('bgColor').value;
-
-            qrContainer.innerHTML = "";
-            downloadBtn.style.display = "none";
-
-            if (input.trim() !== "") {
-                QRCode.toCanvas(input, {
-                    width: 400,
-                    margin: 2,
-                    errorCorrectionLevel: 'H',
-                    color: {
-                        dark: fg,
-                        light: bg
-                    }
-                }, function (err, canvas) {
-                    if (err) return console.error(err);
-                    
-                    // Add Branding Signature to the Canvas
-                    const ctx = canvas.getContext("2d");
-                    ctx.font = "bold 12px Inter";
-                    ctx.fillStyle = fg;
-                    ctx.textAlign = "center";
-                    ctx.fillText("IMOTECH SOLUTIONS", canvas.width / 2, canvas.height - 10);
-
-                    qrContainer.appendChild(canvas);
-                    downloadBtn.style.display = "block";
-                    downloadBtn.currentCanvas = canvas;
-                });
-            }
-        }
-
-        function applyPreset(val) {
-            const input = document.getElementById('qrInput');
-            input.value = val;
-            input.focus();
-            generateQR();
-        }
-
-        function downloadAsset() {
-            const canvas = downloadBtn.currentCanvas;
-            if (canvas) {
-                const link = document.createElement('a');
-                link.download = 'ImoTech_QR_Asset.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }
-        }
-    </script>
-</body>
-</html>
+    
+    <div class="fixed inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
+        <img src="logo.png" class="w-1/2">
+    </div>
+</div>
