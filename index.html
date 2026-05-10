@@ -13,7 +13,15 @@
         .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
         
         /* Panel Transitions */
-        .service-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .service-panel { 
+            transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            /* Ensure panel starts at the very top of the viewport */
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
         .service-panel.active { transform: translateX(0); }
         
         /* Unified Faded Logo Background */
@@ -49,10 +57,9 @@
 <body class="bg-white text-slate-900">
 
     <nav class="glass sticky top-0 z-40 border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center">
+        <div class="max-w-6xl mx-auto px-6 h-24 flex items-center justify-between"> <div class="flex items-center">
                 <a href="#" onclick="window.scrollTo(0,0); return false;" class="block">
-                    <img src="logo.png" alt="ImoTech Logo" class="h-10 md:h-12 w-auto">
+                    <img src="logo.png" alt="ImoTech Logo" class="h-14 md:h-16 w-auto">
                 </a>
             </div>
             
@@ -110,8 +117,7 @@
 
     <footer class="py-20 bg-white border-t border-slate-100 text-slate-400 text-center">
         <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
-            <img src="logo.png" alt="ImoTech Logo" class="h-16 grayscale opacity-40 mb-2">
-            <p class="text-xs uppercase tracking-widest font-semibold">
+            <img src="logo.png" alt="ImoTech Logo" class="h-20 grayscale opacity-40 mb-2"> <p class="text-xs uppercase tracking-widest font-semibold">
                 &copy; 2026 ImoTech Solutions. All rights reserved.
             </p>
         </div>
@@ -196,9 +202,13 @@
         reveal();
 
         function openPanel(id) {
-            document.getElementById(id).classList.add('active');
+            const panel = document.getElementById(id);
+            // Reset panel scroll to the very top before showing it
+            panel.scrollTop = 0;
+            panel.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
         function closePanel(id) {
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = 'auto';
