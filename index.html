@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imotech Solutions | AI & Software Engineering</title>
+    <title>Imotech Solutions | Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -15,113 +15,58 @@
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="glass sticky top-0 z-50 border-b border-slate-200 py-2">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
-            <a href="#home" class="flex flex-col items-center group">
-                <img src="logo.png" alt="Imotech Logo" class="h-12 md:h-14 w-auto transition-transform duration-300 group-hover:scale-105">
-            </a>
-            
-            <div class="flex space-x-8 mt-2 font-bold text-[9px] uppercase tracking-[0.4em] text-slate-400">
-                <a href="#solutions" class="hover:text-blue-600 transition">Solutions</a>
-                <a href="#contact" class="hover:text-blue-600 transition text-blue-500">Get Started</a>
+    <nav class="glass sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="w-1/3 flex justify-start">
+                <a href="#solutions" class="font-bold text-[10px] uppercase tracking-[0.3em] text-slate-500 hover:text-blue-600 transition">Solutions</a>
+            </div>
+
+            <div class="w-1/3 flex justify-center h-full py-2">
+                <a href="index.html" class="h-full">
+                    <img src="logo.png" alt="Imotech Logo" class="h-full w-auto">
+                </a>
+            </div>
+
+            <div class="w-1/3 flex justify-end">
+                <a href="#contact" class="font-bold text-[10px] uppercase tracking-[0.3em] text-blue-600 hover:text-blue-800 transition">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <header id="home" class="hero-gradient py-20 px-6 text-white text-center">
+    <header class="hero-gradient py-24 px-6 text-white text-center">
         <div class="max-w-4xl mx-auto">
-            <div class="flex flex-wrap justify-center gap-2 mb-8">
-                <span class="px-3 py-1 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-[10px] font-black uppercase tracking-widest">AI Automation</span>
-                <span class="px-3 py-1 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-[10px] font-black uppercase tracking-widest">Software Dev</span>
-                <span class="px-3 py-1 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-[10px] font-black uppercase tracking-widest">Cloud Solutions</span>
-            </div>
-
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tighter">
-                AI-Driven Systems for <br><span class="text-blue-500">Full Operational Control.</span>
-            </h1>
-            <p class="text-base text-slate-400 mb-10 font-light max-w-2xl mx-auto leading-relaxed">
-                Imotech Solutions designs and deploys software that improves efficiency, automates processes, and gives you total oversight.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#solutions" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-lg text-sm">
-                    View Solutions
-                </a>
-                <a href="#contact" class="bg-white/5 border border-white/10 text-white px-8 py-3 rounded-lg font-bold hover:bg-white/10 transition text-sm">
-                    Contact Us
-                </a>
-            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter">AI-Driven Systems.</h1>
+            <p class="text-lg text-slate-400 mb-10 font-light">Full operational control and automation for your business.</p>
+            <a href="#solutions" class="bg-blue-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-blue-700 transition">Explore Solutions</a>
         </div>
     </header>
 
-    <section id="solutions" class="py-16 max-w-6xl mx-auto px-6">
-        <div class="grid lg:grid-cols-3 gap-6">
-            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm flex flex-col hover:border-blue-200 transition">
-                <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-6 text-xl">📊</div>
-                <h3 class="text-lg font-extrabold mb-4">Business Management Systems</h3>
-                <ul class="space-y-3 mb-6 flex-grow text-slate-600 font-medium text-xs">
-                    <li>• Internal dashboards</li>
-                    <li>• Workflow & task management</li>
-                    <li>• Staff coordination</li>
-                    <li>• Performance tracking</li>
-                </ul>
-                <p class="text-blue-600 font-black text-[9px] uppercase tracking-widest border-t border-slate-50 pt-4">Business Structure</p>
+    <section id="solutions" class="py-20 max-w-6xl mx-auto px-6">
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+                <h3 class="text-xl font-extrabold mb-4">Business Management</h3>
+                <p class="text-sm text-slate-500 mb-6 flex-grow">Custom dashboards and workflow coordination tools.</p>
+                <a href="business-systems.html" class="inline-block w-full text-center py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</a>
             </div>
-
-            <div class="bg-slate-900 p-8 rounded-2xl text-white shadow-xl flex flex-col transform lg:-translate-y-2">
-                <div class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-6 text-xl">🤖</div>
-                <h3 class="text-lg font-extrabold mb-4">AI & Automation Solutions</h3>
-                <ul class="space-y-3 mb-6 flex-grow text-slate-400 font-medium text-xs">
-                    <li>• Process automation</li>
-                    <li>• Smart data handling</li>
-                    <li>• AI-assisted workflows</li>
-                    <li>• Automated insights</li>
-                </ul>
-                <p class="text-blue-400 font-black text-[9px] uppercase tracking-widest border-t border-white/10 pt-4">Zero Manual Labor</p>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+                <h3 class="text-xl font-extrabold mb-4">AI & Automation</h3>
+                <p class="text-sm text-slate-500 mb-6 flex-grow">Reduce manual workload with smart data handling.</p>
+                <a href="ai-automation.html" class="inline-block w-full text-center py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</a>
             </div>
-
-            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm flex flex-col hover:border-blue-200 transition">
-                <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-6 text-xl">🌐</div>
-                <h3 class="text-lg font-extrabold mb-4">Web Platforms & Tools</h3>
-                <ul class="space-y-3 mb-6 flex-grow text-slate-600 font-medium text-xs">
-                    <li>• Company websites</li>
-                    <li>• Client & staff portals</li>
-                    <li>• Service dashboards</li>
-                    <li>• Integrated ecosystems</li>
-                </ul>
-                <p class="text-blue-600 font-black text-[9px] uppercase tracking-widest border-t border-slate-50 pt-4">Working Tools</p>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+                <h3 class="text-xl font-extrabold mb-4">Web Platforms</h3>
+                <p class="text-sm text-slate-500 mb-6 flex-grow">Functional digital tools for real business activity.</p>
+                <a href="web-platforms.html" class="inline-block w-full text-center py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-blue-600 transition">Go to Service</a>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-16 bg-slate-100">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-extrabold mb-2">Start Your Transformation</h2>
-            <p class="text-slate-500 mb-8 font-medium text-sm">Submit your project details below.</p>
-            
-            <div class="w-full bg-white rounded-xl overflow-hidden shadow-lg border border-slate-200">
-                <iframe 
-                    src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" 
-                    width="100%" 
-                    height="1000" 
-                    frameborder="0" 
-                    marginheight="0" 
-                    marginwidth="0">
-                    Loading…
-                </iframe>
+    <section id="contact" class="py-20 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="w-full bg-white rounded-2xl overflow-hidden shadow-xl">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyEfVfttPUVhxMsaSXAejDSr6qfRwjfl5udOweHtKJomh7rA/viewform?embedded=true" width="100%" height="800" frameborder="0">Loading…</iframe>
             </div>
         </div>
     </section>
-
-    <footer class="py-10 bg-white border-t border-slate-200">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <div class="flex flex-col items-center gap-2">
-                <img src="logo.png" alt="Logo" class="h-8 opacity-80">
-                <p class="text-slate-400 text-[9px] tracking-widest uppercase font-bold">
-                    &copy; 2026 Imotech Solutions.
-                </p>
-            </div>
-        </div>
-    </footer>
-
 </body>
 </html>
