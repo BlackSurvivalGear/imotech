@@ -9,100 +9,118 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         html { scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .hero-gradient { background: radial-gradient(circle at center, #1e293b, #0f172a); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="glass sticky top-0 z-50 border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="logo.png" alt="Imotech Logo" class="h-10 w-auto">
-                <span class="text-xl font-extrabold tracking-tight">IMOTECH</span>
-            </div>
-            <div class="space-x-8 hidden md:flex font-medium text-sm uppercase tracking-widest">
-                <a href="#services" class="hover:text-blue-600 transition">Services</a>
+    <nav class="glass sticky top-0 z-50 border-b border-slate-200 py-6">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center">
+            <a href="#home" class="flex flex-col items-center gap-3 mb-6 group">
+                <img src="logo.png" alt="Imotech Logo" class="h-20 md:h-24 w-auto transition-transform group-hover:scale-105">
+                <span class="text-2xl font-extrabold tracking-[0.2em] text-slate-900">IMOTECH</span>
+            </a>
+            
+            <div class="flex space-x-10 font-bold text-xs uppercase tracking-widest text-slate-500">
                 <a href="#solutions" class="hover:text-blue-600 transition">Solutions</a>
-                <a href="mailto:contact@imotech.solutions" class="text-blue-600">Contact</a>
+                <a href="#contact" class="hover:text-blue-600 transition">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <header class="relative py-24 px-6 bg-slate-900 text-white overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 40px 40px;"></div>
-        </div>
-        <div class="relative max-w-4xl mx-auto text-center">
-            <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-blue-600 rounded-full">Future-Proof Your Operations</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-8 leading-tight">AI-Driven Systems for Full Operational Control.</h1>
-            <p class="text-xl text-slate-400 mb-10 font-light leading-relaxed">
-                Imotech Solutions designs and deploys software and AI-driven systems that improve efficiency, automate processes, and give you full control over your operations.
+    <header id="home" class="hero-gradient py-32 px-6 text-white text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <span class="px-5 py-1.5 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-xs font-black uppercase tracking-widest">AI Automation</span>
+                <span class="px-5 py-1.5 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-xs font-black uppercase tracking-widest">Software Dev</span>
+                <span class="px-5 py-1.5 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-xs font-black uppercase tracking-widest">Cloud Solutions</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tighter">
+                AI-Driven Systems for <br><span class="text-blue-500">Full Operational Control.</span>
+            </h1>
+            <p class="text-xl text-slate-400 mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+                Imotech Solutions designs and deploys software that improves efficiency, automates processes, and gives you total oversight.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#solutions" class="bg-white text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg">View Solutions</a>
-                <div class="flex items-center gap-4 text-sm font-medium text-slate-300 px-6">
-                    <span>AI Automation</span> • <span>Software Dev</span> • <span>Cloud</span>
-                </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+                <a href="#solutions" class="bg-blue-600 text-white px-12 py-5 rounded-2xl font-bold hover:bg-blue-700 transition shadow-2xl shadow-blue-900/40 text-lg">
+                    View Solutions
+                </a>
+                <a href="#contact" class="bg-white/5 backdrop-blur-md border border-white/10 text-white px-12 py-5 rounded-2xl font-bold hover:bg-white/20 transition text-lg">
+                    Contact Us
+                </a>
             </div>
         </div>
     </header>
 
     <section id="solutions" class="py-24 max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Our Core Capabilities</h2>
-            <div class="h-1.5 w-20 bg-blue-600 mx-auto rounded-full"></div>
-        </div>
-
-        <div class="grid lg:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 text-2xl">📊</div>
-                <h3 class="text-xl font-extrabold mb-4">Business Management Systems</h3>
-                <p class="text-slate-500 mb-6 text-sm">Custom-built systems designed to manage your operations:</p>
-                <ul class="space-y-3 mb-8 flex-grow text-slate-700 font-medium">
-                    <li class="flex items-start gap-2"><span>•</span> Internal dashboards</li>
-                    <li class="flex items-start gap-2"><span>•</span> Workflow and task management</li>
-                    <li class="flex items-start gap-2"><span>•</span> Staff and process coordination</li>
-                    <li class="flex items-start gap-2"><span>•</span> Reporting and performance tracking</li>
+        <div class="grid lg:grid-cols-3 gap-10">
+            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl flex flex-col hover:shadow-2xl transition-all duration-300">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">📊</div>
+                <h3 class="text-2xl font-extrabold mb-6">Business Management Systems</h3>
+                <ul class="space-y-4 mb-10 flex-grow text-slate-600 font-medium">
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Internal dashboards</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Workflow & task management</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Staff coordination</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Performance tracking</li>
                 </ul>
-                <p class="text-blue-600 font-bold text-sm italic pt-4 border-t border-slate-50">Structure your business into a clear, controlled system.</p>
+                <p class="text-blue-600 font-black text-xs uppercase tracking-widest border-t border-slate-50 pt-6">Complete Business Structure</p>
             </div>
 
-            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col">
-                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6 text-2xl">🤖</div>
-                <h3 class="text-xl font-extrabold mb-4">AI & Automation Solutions</h3>
-                <p class="text-slate-500 mb-6 text-sm">We use AI to reduce manual workload and improve decision-making:</p>
-                <ul class="space-y-3 mb-8 flex-grow text-slate-700 font-medium">
-                    <li class="flex items-start gap-2"><span>•</span> Process automation</li>
-                    <li class="flex items-start gap-2"><span>•</span> Smart data handling</li>
-                    <li class="flex items-start gap-2"><span>•</span> AI-assisted workflows</li>
-                    <li class="flex items-start gap-2"><span>•</span> Automated reporting and insights</li>
+            <div class="bg-slate-900 p-10 rounded-[2.5rem] text-white shadow-2xl flex flex-col transform lg:-translate-y-4">
+                <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 text-3xl">🤖</div>
+                <h3 class="text-2xl font-extrabold mb-6">AI & Automation Solutions</h3>
+                <ul class="space-y-4 mb-10 flex-grow text-slate-400 font-medium">
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Process automation</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Smart data handling</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> AI-assisted workflows</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Automated insights</li>
                 </ul>
-                <p class="text-purple-600 font-bold text-sm italic pt-4 border-t border-slate-50">Replace repetitive tasks with intelligent automation.</p>
+                <p class="text-blue-400 font-black text-xs uppercase tracking-widest border-t border-white/10 pt-6">Eliminate Manual Labor</p>
             </div>
 
-            <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 flex flex-col">
-                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6 text-2xl">🌐</div>
-                <h3 class="text-xl font-extrabold mb-4">Web Platforms & Digital Tools</h3>
-                <p class="text-slate-500 mb-6 text-sm">We build functional platforms that support real business activity:</p>
-                <ul class="space-y-3 mb-8 flex-grow text-slate-700 font-medium">
-                    <li class="flex items-start gap-2"><span>•</span> Company websites</li>
-                    <li class="flex items-start gap-2"><span>•</span> Client and staff portals</li>
-                    <li class="flex items-start gap-2"><span>•</span> Service platforms and dashboards</li>
-                    <li class="flex items-start gap-2"><span>•</span> Integrated digital ecosystems</li>
+            <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl flex flex-col hover:shadow-2xl transition-all duration-300">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8 text-3xl">🌐</div>
+                <h3 class="text-2xl font-extrabold mb-6">Web Platforms & Tools</h3>
+                <ul class="space-y-4 mb-10 flex-grow text-slate-600 font-medium">
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Company websites</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Client & staff portals</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Service dashboards</li>
+                    <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Integrated ecosystems</li>
                 </ul>
-                <p class="text-emerald-600 font-bold text-sm italic pt-4 border-t border-slate-50">More than a website—a working business tool.</p>
+                <p class="text-blue-600 font-black text-xs uppercase tracking-widest border-t border-slate-50 pt-6">Scalable Business Tools</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 bg-slate-50 border-t border-slate-200">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <img src="logo.png" alt="Logo" class="h-6 opacity-50 grayscale">
-                <span class="font-bold text-slate-400">IMOTECH SOLUTIONS</span>
+    <section id="contact" class="py-24 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold mb-4">Start Your Transformation</h2>
+            <p class="text-slate-500 mb-12 font-medium">Fill out our intake form and we will design your custom solution.</p>
+            
+            <div class="w-full bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-slate-200">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeX9pE6yVqf8P0vjL-0-WzV9v5v-XzG-w/viewform?embedded=true" 
+                    width="100%" 
+                    height="900" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Loading…
+                </iframe>
             </div>
-            <div class="text-slate-400 text-sm">
-                &copy; 2026 Imotech Solutions. All rights reserved.
+        </div>
+    </section>
+
+    <footer class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="flex flex-col items-center gap-4">
+                <img src="logo.png" alt="Logo" class="h-12 opacity-90 mb-2">
+                <span class="font-black text-slate-900 tracking-[0.3em] text-sm">IMOTECH SOLUTIONS</span>
+                <p class="text-slate-400 text-xs mt-4">
+                    &copy; 2026 Imotech Solutions. All rights reserved.
+                </p>
             </div>
         </div>
     </footer>
